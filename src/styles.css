@@ -1,4 +1,4 @@
-@import "tailwindcss" source(none);
+@import "tailwindcss";
 @source "../src";
 @import "tw-animate-css";
 
@@ -43,34 +43,94 @@
   --radius: 0.5rem;
 
   /* Custom color scheme */
-  --background: #eff6e0;
-  --paper: #eff6e0;
-  --foreground: #01161e;
-  --ink: #01161e;
-  --card: #eff6e0;
-  --card-foreground: #01161e;
-  --popover: #eff6e0;
-  --popover-foreground: #01161e;
-  --primary: #01161e;
-  --primary-foreground: #eff6e0;
-  --secondary: #aec3b0;
-  --secondary-foreground: #01161e;
-  --muted: #aec3b0;
-  --muted-foreground: #598392;
-  --accent: #124559;
-  --accent-foreground: #eff6e0;
-  --destructive: #d32f2f;
-  --destructive-foreground: #eff6e0;
-  --border: #aec3b0;
-  --input: #aec3b0;
-  --ring: #598392;
-  --rail: #598392;
+  --background: var(--color-platinum-50);
+  --paper: var(--color-platinum-50);
+  --foreground: var(--color-jet-black-950);
+  --ink: var(--color-jet-black-950);
+  --card: var(--color-platinum-100);
+  --card-foreground: var(--color-jet-black-950);
+  --popover: var(--color-platinum-50);
+  --popover-foreground: var(--color-jet-black-950);
+  --primary: var(--color-jet-black-900);
+  --primary-foreground: var(--color-platinum-50);
+  --secondary: var(--color-dust-grey-200);
+  --secondary-foreground: var(--color-jet-black-950);
+  --muted: var(--color-platinum-200);
+  --muted-foreground: var(--color-jet-black-600);
+  --accent: var(--color-burnt-peach-500);
+  --accent-foreground: var(--color-platinum-50);
+  --destructive: var(--color-burnt-peach-600);
+  --destructive-foreground: var(--color-platinum-50);
+  --border: var(--color-platinum-200);
+  --input: var(--color-platinum-200);
+  --ring: var(--color-jet-black-500);
+  --rail: var(--color-jet-black-400);
 
   --chart-1: var(--accent);
   --chart-2: var(--muted-foreground);
   --chart-3: var(--foreground);
   --chart-4: var(--rail);
   --chart-5: var(--border);
+
+  --color-jet-black-50: #eef4f6;
+  --color-jet-black-100: #dde8ee;
+  --color-jet-black-200: #bbd2dd;
+  --color-jet-black-300: #99bbcc;
+  --color-jet-black-400: #77a4bb;
+  --color-jet-black-500: #558eaa;
+  --color-jet-black-600: #447188;
+  --color-jet-black-700: #335566;
+  --color-jet-black-800: #223944;
+  --color-jet-black-900: #111c22;
+  --color-jet-black-950: #0c1418;
+
+  --color-platinum-50: #f0f2f4;
+  --color-platinum-100: #e2e6e9;
+  --color-platinum-200: #c5ccd3;
+  --color-platinum-300: #a8b3bd;
+  --color-platinum-400: #8b99a7;
+  --color-platinum-500: #6e7f91;
+  --color-platinum-600: #586674;
+  --color-platinum-700: #424c57;
+  --color-platinum-800: #2c333a;
+  --color-platinum-900: #16191d;
+  --color-platinum-950: #0f1214;
+
+  --color-dust-grey-50: #f4f1f3;
+  --color-dust-grey-100: #e8e3e6;
+  --color-dust-grey-200: #d1c7cd;
+  --color-dust-grey-300: #baabb5;
+  --color-dust-grey-400: #a38f9c;
+  --color-dust-grey-500: #8c7383;
+  --color-dust-grey-600: #705c69;
+  --color-dust-grey-700: #54454f;
+  --color-dust-grey-800: #382e34;
+  --color-dust-grey-900: #1c171a;
+  --color-dust-grey-950: #141012;
+
+  --color-desert-sand-50: #f8f1ed;
+  --color-desert-sand-100: #f0e2db;
+  --color-desert-sand-200: #e1c6b7;
+  --color-desert-sand-300: #d3a992;
+  --color-desert-sand-400: #c48c6e;
+  --color-desert-sand-500: #b56f4a;
+  --color-desert-sand-600: #91593b;
+  --color-desert-sand-700: #6d432c;
+  --color-desert-sand-800: #482d1e;
+  --color-desert-sand-900: #24160f;
+  --color-desert-sand-950: #19100a;
+
+  --color-burnt-peach-50: #faeeeb;
+  --color-burnt-peach-100: #f5ddd6;
+  --color-burnt-peach-200: #ebbbad;
+  --color-burnt-peach-300: #e09885;
+  --color-burnt-peach-400: #d6765c;
+  --color-burnt-peach-500: #cc5433;
+  --color-burnt-peach-600: #a34329;
+  --color-burnt-peach-700: #7a321f;
+  --color-burnt-peach-800: #522214;
+  --color-burnt-peach-900: #29110a;
+  --color-burnt-peach-950: #1d0c07;
 
   --sidebar: var(--background);
   --sidebar-foreground: var(--foreground);

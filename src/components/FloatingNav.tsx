@@ -37,8 +37,9 @@ export function FloatingNav() {
     setActive(id);
     const element = document.getElementById(id);
     if (element) {
-      const scrollBlock = id === "contact" ? "center" : "start";
-      element.scrollIntoView({ behavior: "smooth", block: scrollBlock });
+      const extraOffset = id === "contact" ? window.innerHeight * 0.15 : id === "reading" ? window.innerHeight * 0.01 : 0;
+      const top = element.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + element.getBoundingClientRect().height / 2 + extraOffset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 

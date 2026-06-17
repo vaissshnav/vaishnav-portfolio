@@ -58,9 +58,6 @@ export function ReadingList() {
             <div style={{ borderColor: "var(--border)" }}>
               <h3 className="font-serif text-2xl text-foreground">{b.title}</h3>
               <div className="mono-label mt-1">{b.author}</div>
-              <div className="mono-label mt-3" style={{ color: "var(--accent)" }}>
-                Influence
-              </div>
             </div>
             <div
               className={`${i === 0 ? "" : "mt-4 "}space-y-3 text-[15px] leading-relaxed text-foreground/85`}

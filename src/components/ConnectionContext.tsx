@@ -241,7 +241,8 @@ export function ConnectionProvider({ children }: { children: ReactNode }) {
     };
     const isRelevant = (id: string) => {
       if (!hovered) return true;
-      return hovered === id || (CONNECTIONS[hovered] ?? []).includes(id);
+      if (hovered === id) return true;
+      return (CONNECTIONS[hovered] ?? []).includes(id) || (CONNECTIONS[id] ?? []).includes(hovered);
     };
     return {
       hovered,
@@ -306,8 +307,8 @@ export function Connectable({
         position: "relative",
         zIndex: hoveredSelf || connected ? 20 : 2,
         transition: "outline-color 250ms ease, box-shadow 250ms ease, opacity 250ms ease",
-        outline: connected ? "1px solid var(--accent)" : "1px solid transparent",
-        outlineOffset: connected ? "6px" : "0px",
+        outline: hoveredSelf ? "1px solid var(--accent)" : "1px solid transparent",
+        outlineOffset: hoveredSelf ? "6px" : "0px",
         borderRadius: 12,
         opacity: faded ? 0.32 : 1,
       }}
