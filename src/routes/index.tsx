@@ -7,9 +7,7 @@ import { InterestMap } from "@/components/InterestMap";
 import { ReadingList } from "@/components/ReadingList";
 import { SectionRail } from "@/components/SectionRail";
 import { ResumeDropdown } from "@/components/ResumeDropdown";
-import {
-  ConnectionProvider,
-} from "@/components/ConnectionContext";
+import { ConnectionProvider } from "@/components/ConnectionContext";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,7 +37,6 @@ function Home() {
       <div className="relative z-10 min-h-screen text-foreground">
         <FloatingNav />
 
-
         {/* Top mast */}
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 pt-8">
           <a href="#about" className="font-serif text-lg tracking-tight">
@@ -62,7 +59,7 @@ function Home() {
         <footer id="bottom" className="mx-auto max-w-6xl px-6 py-12">
           <div className="mono-label flex items-center justify-between">
             <span>© Vaishnav</span>
-            <span>Made slowly, on purpose.</span>
+            <span>made with ❤️</span>
           </div>
         </footer>
       </div>
@@ -148,8 +145,7 @@ function About() {
           , and the people who build ambitious things.
         </p>
         <p>
-          Currently exploring how hardware, software and business intersect to
-          create{" "}
+          Currently exploring how hardware, software and business intersect to create{" "}
           <Annotation
             label="Leverage"
             meta="Working definition"
@@ -163,15 +159,13 @@ function About() {
           .
         </p>
         <p className="text-foreground/70">
-          This site isn't a portfolio. It's a map of curiosity. I'm still figuring out my niche. This site is where I keep track of the search.
+          This site isn't a portfolio. It's a map of curiosity. I'm still figuring out my niche.
+          This site is where I keep track of the search.
         </p>
       </div>
 
       <div className="mono-label mt-20 flex items-center gap-3 text-muted-foreground">
-        <span
-          className="block h-px w-8"
-          style={{ backgroundColor: "var(--rail)" }}
-        />
+        <span className="block h-px w-8" style={{ backgroundColor: "var(--rail)" }} />
         Begin the path
       </div>
     </section>
@@ -185,11 +179,11 @@ function Journey() {
     <section id="journey" className="scroll-mt-24">
       <SectionHeader index="02 / Journey" title="How the thinking evolved" />
       <p className="mx-auto mb-16 max-w-2xl px-6 text-base leading-relaxed text-muted-foreground">
-        A chain of cause and effect. Each milestone has three beats:{" "}
+        A chain of cause and effect. Each milestone explains:{" "}
         <em className="font-serif text-foreground">what happened</em>,{" "}
         <em className="font-serif text-foreground">what I learned</em>, and{" "}
-        <em className="font-serif text-foreground">what changed afterward</em>.
-        The rail fills as you read. Expand any card to read the story.
+        <em className="font-serif text-foreground">what changed afterward</em>. The rail fills as
+        you read. Expand any card to read the story.
       </p>
       <JourneyRail />
     </section>
@@ -201,16 +195,12 @@ function Journey() {
 function Interests() {
   return (
     <section id="interests" className="scroll-mt-24">
-      <SectionHeader
-        index="03 / Current Interests"
-        title="A thinking map, not a list"
-      />
+      <SectionHeader index="03 / Current Interests" title="A thinking map, not a list" />
       <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_1.2fr] md:items-center">
         <div className="space-y-5 text-foreground/85">
           <p className="text-base leading-relaxed">
-            These aren't isolated interests — they influence each other. Hover
-            any node to see what it connects to. Everything eventually loops
-            back to <em className="font-serif">NOW</em>.
+            These aren't isolated interests — they influence each other. Hover any node to see what
+            it connects to. Everything eventually loops back to <em className="font-serif">NOW</em>.
           </p>
           <ul className="mono-label space-y-1 pt-2">
             <li>· Hardware ↔ Semiconductors</li>
@@ -220,9 +210,8 @@ function Interests() {
             <li>· Everything → NOW</li>
           </ul>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Toggle <em className="font-serif text-foreground">View connections</em>{" "}
-            (bottom right) to see how nodes here link out to journey
-            milestones, observations and books.
+            Toggle <em className="font-serif text-foreground">View connections</em> (bottom right)
+            to see how nodes here link out to journey milestones, observations and books.
           </p>
         </div>
         <InterestMap />
@@ -242,8 +231,8 @@ function Reading() {
         <em className="font-serif text-foreground">why it mattered</em>,{" "}
         <em className="font-serif text-foreground">key idea</em>,{" "}
         <em className="font-serif text-foreground">related interests</em>, and{" "}
-        <em className="font-serif text-foreground">related observations</em>.
-        Content is intentionally blank — to be written by hand.
+        <em className="font-serif text-foreground">related observations</em>. Content is
+        intentionally blank — to be written by hand.
       </p>
       <ReadingList />
     </section>
@@ -254,18 +243,11 @@ function Reading() {
 
 function Contact() {
   return (
-    <section
-      id="contact"
-      className="flex min-h-screen scroll-mt-24 items-center justify-center"
-    >
+    <section id="contact" className="flex min-h-screen scroll-mt-24 items-center justify-center">
       <div className="mx-auto max-w-5xl px-6">
         {/* terminal rail dot — end of the path */}
         <div className="relative mx-auto flex flex-col items-center pb-10">
-          <div
-            aria-hidden
-            className="h-20 w-px"
-            style={{ backgroundColor: "var(--rail)" }}
-          />
+          <div aria-hidden className="h-20 w-px" style={{ backgroundColor: "var(--rail)" }} />
           <div
             aria-hidden
             className="-mt-1.5 h-4 w-4 rounded-full"
@@ -275,9 +257,7 @@ function Contact() {
                 "0 0 0 4px var(--background), 0 0 18px 2px color-mix(in oklab, var(--accent) 60%, transparent)",
             }}
           />
-          <div className="mono-label mt-4 text-[0.6rem]">
-            The path continues — through people
-          </div>
+          <div className="mono-label mt-4 text-[0.6rem]">The path continues — through people</div>
         </div>
 
         <div className="mx-auto max-w-3xl text-center">
@@ -306,7 +286,11 @@ function Contact() {
               { label: "Email", href: "mailto:vaishnavkumarsw@gmail.com", hint: "fastest" },
               { label: "LinkedIn", href: "https://linkedin.com/in/panyamvk", hint: "/in/panyamvk" },
               { label: "X", href: "https://x.com", hint: "coming soon" },
-              { label: "Calendly", href: "https://calendly.com/vaissshnav/1-on-1-personal-chat", hint: "15 min" },
+              {
+                label: "Calendly",
+                href: "https://calendly.com/vaissshnav/1-on-1-personal-chat",
+                hint: "15 min",
+              },
             ].map((l) => (
               <li key={l.label} className="bg-background">
                 <a

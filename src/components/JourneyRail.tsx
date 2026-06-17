@@ -1,11 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, forwardRef } from "react";
-import { ChevronDown } from "lucide-react";
-import {
-  CONNECTIONS,
-  Connectable,
-  RefPill,
-  useConnections,
-} from "@/components/ConnectionContext";
+import { Connectable, useConnections } from "@/components/ConnectionContext";
 
 export type JourneyNode = {
   id: string;
@@ -16,11 +10,6 @@ export type JourneyNode = {
   summary: string;
   logo?: string;
   tags?: string[];
-  story: {
-    happened: string;
-    learned: string;
-    changed: string;
-  };
 };
 
 /**
@@ -38,14 +27,6 @@ const NODES: JourneyNode[] = [
       "Long before the startups and electronics, the first real obsession was visual and interaction design — copying, redrawing, deconstructing interfaces to understand why they worked.",
     logo: "DSGN",
     tags: ["Design", "Craft", "Self-taught"],
-    story: {
-      happened:
-        "Spent months obsessively studying interfaces, type, color and motion. Rebuilt apps from scratch, read design writing, made a lot of small things just to feel the medium.",
-      learned:
-        "Taste is built by doing the work, not by consuming opinions. Looking carefully is a skill, and it transfers everywhere.",
-      changed:
-        "Gave me the aesthetic instincts that every later decision — product, startup, even hardware — quietly rests on.",
-    },
   },
   {
     id: "eonforge",
@@ -57,14 +38,6 @@ const NODES: JourneyNode[] = [
       "First professional design work — ERP software for schools. Real users, real constraints, real opinions.",
     logo: "EF",
     tags: ["Design", "UX", "Interfaces"],
-    story: {
-      happened:
-        "Collaborated on the design of an ERP product used by schools. Learned the working vocabulary of interface design and product decisions in a team setting.",
-      learned:
-        "Interfaces are opinions. Every small decision quietly tells the user what is and isn't possible.",
-      changed:
-        "Gave me the foundation in design that made later product and startup work possible.",
-    },
   },
   {
     id: "whomr",
@@ -76,14 +49,6 @@ const NODES: JourneyNode[] = [
       "Identified a roommate-discovery problem and built a startup around it. MVPs, surveys, user conversations, pitch, angel funding.",
     logo: "WHM",
     tags: ["Startup", "Validation", "Customer Discovery"],
-    story: {
-      happened:
-        "Spotted the roommate-discovery problem, ran validation experiments and surveys, built MVPs, talked to users, pitched, and secured angel funding.",
-      learned:
-        "Building is the easy part. Understanding the user — what they actually want, how they actually decide — is the entire job.",
-      changed:
-        "Made customer discovery the default instinct, and pulled me toward founders, operators and the people who do the hard, slow work of starting things.",
-    },
   },
   {
     id: "wemus",
@@ -95,14 +60,6 @@ const NODES: JourneyNode[] = [
       "Worked close to 0 → 1 — product research, onboarding, UX decisions, GTM conversations, the operational glue.",
     logo: "WMS",
     tags: ["Product", "Users", "Execution"],
-    story: {
-      happened:
-        "Observed an early-stage startup up close. Contributed to product research, onboarding analysis, UX decisions, and operational work; sat in on positioning and GTM discussions.",
-      learned:
-        "Products shape behavior. Onboarding friction is a story about what a user is being asked to believe.",
-      changed:
-        "Turned a vague interest in design into a concrete interest in product thinking and user journeys.",
-    },
   },
   {
     id: "afc",
@@ -114,14 +71,6 @@ const NODES: JourneyNode[] = [
       "Started a filmmaking community from scratch and grew it organically to 150+ members. Sessions, challenges, conversations.",
     logo: "AFC",
     tags: ["Community", "Retention", "Behavior"],
-    story: {
-      happened:
-        "Built AFC from zero — designed the on-ramp, ran sessions, challenges and reviews, and spent a lot of time talking to members individually.",
-      learned:
-        "Communities behave like products. They grow on rituals, ownership and a low-friction first contribution, not on enthusiasm.",
-      changed:
-        "Pulled me toward systems thinking — incentives, participation, feedback loops — and the idea that human behavior can be designed for.",
-    },
   },
   {
     id: "reading-turn",
@@ -133,14 +82,6 @@ const NODES: JourneyNode[] = [
       "A stretch where the inputs changed faster than the outputs. Chip War, Poor Charlie's Almanack and a handful of others quietly redirected what I cared about.",
     logo: "READ",
     tags: ["Books", "Direction", "Inputs"],
-    story: {
-      happened:
-        "Read deliberately and slowly through a sequence of books on hardware, capital, behavior and decision-making. Took notes, argued with them, revisited the ones that didn't sit right.",
-      learned:
-        "Your inputs become your taste. If you only read what everyone around you reads, you'll only see what everyone around you sees.",
-      changed:
-        "Moved my attention from the application layer toward the layers under it — manufacturing, infrastructure, leverage.",
-    },
   },
   {
     id: "mit-pathway",
@@ -152,14 +93,6 @@ const NODES: JourneyNode[] = [
       "A deliberate decision to orient education and research around hardware, semiconductors and the infrastructure beneath AI — not as a side interest, but as the main one.",
     logo: "MIT",
     tags: ["Pathway", "Hardware", "Commitment"],
-    story: {
-      happened:
-        "Restructured what I was studying, who I was talking to, and what I was building around the hardware track. Started taking the work — courses, labs, reading — seriously as a long-horizon bet.",
-      learned:
-        "Direction is a decision, not a discovery. You commit and then the world starts giving you better material.",
-      changed:
-        "Turned a curiosity into a path. Set up the electronics turn that followed.",
-    },
   },
   {
     id: "electronics",
@@ -171,19 +104,10 @@ const NODES: JourneyNode[] = [
       "Increasingly moved toward Electronics & Computer Engineering — semiconductors, robotics, AI infrastructure, systems that create leverage.",
     logo: "NOW",
     tags: ["Semiconductors", "Robotics", "AI Infra"],
-    story: {
-      happened:
-        "Shifted focus away from purely software work and toward hardware, semiconductors, robotics and the infrastructure underneath modern AI.",
-      learned:
-        "The most interesting leverage tends to sit one layer below where most people are looking.",
-      changed:
-        "Set the current direction — and the lens this site is built around.",
-    },
   },
 ];
 
 export function JourneyRail() {
-  const [open, setOpen] = useState<string | null>(null);
   const [activeIdx, setActiveIdx] = useState(0);
   const [progress, setProgress] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -264,8 +188,7 @@ export function JourneyRail() {
       clearTimeout(timer);
       window.removeEventListener("resize", onResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -276,10 +199,7 @@ export function JourneyRail() {
 
       const railTop = rect.top;
       const railHeight = rect.height;
-      const traveled = Math.min(
-        Math.max(viewportMid - railTop, 0),
-        railHeight,
-      );
+      const traveled = Math.min(Math.max(viewportMid - railTop, 0), railHeight);
       const p = railHeight > 0 ? traveled / railHeight : 0;
       setProgress(p);
 
@@ -330,8 +250,7 @@ export function JourneyRail() {
             strokeDashoffset={(1 - progress) * geom.length}
             style={{
               transition: "stroke-dashoffset 120ms linear",
-              filter:
-                "drop-shadow(0 0 6px color-mix(in oklab, var(--accent) 35%, transparent))",
+              filter: "drop-shadow(0 0 6px color-mix(in oklab, var(--accent) 35%, transparent))",
             }}
           />
           {/* top terminator dot */}
@@ -345,19 +264,13 @@ export function JourneyRail() {
       )}
 
       {/* hidden path for measurement */}
-      <svg
-        aria-hidden
-        width="0"
-        height="0"
-        style={{ position: "absolute", visibility: "hidden" }}
-      >
+      <svg aria-hidden width="0" height="0" style={{ position: "absolute", visibility: "hidden" }}>
         <path ref={pathMeasureRef} />
       </svg>
 
       <ol className="relative space-y-20 md:space-y-28" style={{ zIndex: 1 }}>
         {NODES.map((node, i) => {
           const isLeft = i % 2 === 0;
-          const isOpen = open === node.id;
           const isActive = i === activeIdx;
           return (
             <li
@@ -368,25 +281,19 @@ export function JourneyRail() {
               className="relative md:grid md:grid-cols-2 md:gap-12"
             >
               <RailDot
-                ref={(el) => { dotRefs.current[i] = el; }}
+                ref={(el) => {
+                  dotRefs.current[i] = el;
+                }}
                 active={isActive}
                 reached={i <= activeIdx}
               />
 
               <div
                 className={`pl-12 md:pl-0 ${
-                  isLeft
-                    ? "md:col-start-1 md:pr-10 md:text-right"
-                    : "md:col-start-2 md:pl-10"
+                  isLeft ? "md:col-start-1 md:pr-10 md:text-right" : "md:col-start-2 md:pl-10"
                 }`}
               >
-                <JourneyCard
-                  node={node}
-                  isOpen={isOpen}
-                  isActive={isActive}
-                  align={isLeft ? "right" : "left"}
-                  onToggle={() => setOpen(isOpen ? null : node.id)}
-                />
+                <JourneyCard node={node} isActive={isActive} align={isLeft ? "right" : "left"} />
               </div>
             </li>
           );
@@ -416,28 +323,25 @@ const RailDot = forwardRef<HTMLSpanElement, { active: boolean; reached: boolean 
         }}
       />
     );
-  }
+  },
 );
 RailDot.displayName = "RailDot";
 
 function JourneyCard({
   node,
-  isOpen,
   isActive,
   align,
-  onToggle,
 }: {
   node: JourneyNode;
-  isOpen: boolean;
   isActive: boolean;
   align: "left" | "right";
-  onToggle: () => void;
 }) {
   return (
     <Connectable
       id={node.connId}
       as="article"
       className="group relative block rounded-lg border bg-card p-6 transition-all duration-300 hover:-translate-y-0.5"
+      showRefs={false}
     >
       <div
         style={{
@@ -454,29 +358,19 @@ function JourneyCard({
           <LogoSlot label={node.logo ?? node.title.slice(0, 3)} active={isActive} />
           <div className="min-w-0 flex-1">
             <div
-              className={`flex items-baseline gap-3 ${
-                align === "right" ? "md:justify-end" : ""
-              }`}
+              className={`flex items-baseline gap-3 ${align === "right" ? "md:justify-end" : ""}`}
             >
-              <h3 className="font-serif text-2xl leading-none text-foreground">
-                {node.title}
-              </h3>
+              <h3 className="font-serif text-2xl leading-none text-foreground">{node.title}</h3>
               <span className="mono-label">{node.year}</span>
             </div>
             <p className="mt-1 text-sm text-muted-foreground">{node.subtitle}</p>
           </div>
         </header>
 
-        <p className="mt-4 text-[15px] leading-relaxed text-foreground/85">
-          {node.summary}
-        </p>
+        <p className="mt-4 text-[15px] leading-relaxed text-foreground/85">{node.summary}</p>
 
         {node.tags && (
-          <ul
-            className={`mt-4 flex flex-wrap gap-2 ${
-              align === "right" ? "md:justify-end" : ""
-            }`}
-          >
+          <ul className={`mt-4 flex flex-wrap gap-2 ${align === "right" ? "md:justify-end" : ""}`}>
             {node.tags.map((t) => (
               <li
                 key={t}
@@ -488,99 +382,8 @@ function JourneyCard({
             ))}
           </ul>
         )}
-
-        <button
-          type="button"
-          onClick={onToggle}
-          className={`mt-5 inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground ${
-            align === "right" ? "md:ml-auto" : ""
-          }`}
-          aria-expanded={isOpen}
-        >
-          <span className="mono-label text-[0.62rem]">
-            {isOpen ? "Collapse story" : "Read the story"}
-          </span>
-          <ChevronDown
-            className="h-3 w-3 transition-transform"
-            style={{ transform: isOpen ? "rotate(180deg)" : "none" }}
-          />
-        </button>
-
-        <div
-          className="grid overflow-hidden transition-all duration-500 ease-out"
-          style={{
-            gridTemplateRows: isOpen ? "1fr" : "0fr",
-            opacity: isOpen ? 1 : 0,
-          }}
-        >
-          <div className="min-h-0">
-            <div
-              className={`mt-5 space-y-4 border-t pt-5 text-sm leading-relaxed text-foreground/85 ${
-                align === "right" ? "md:text-right" : ""
-              }`}
-              style={{ borderColor: "var(--border)" }}
-            >
-              <Beat label="What happened">{node.story.happened}</Beat>
-              <Beat label="What I learned">{node.story.learned}</Beat>
-              <Beat label="What changed afterward">{node.story.changed}</Beat>
-              <Ripples connId={node.connId} align={align} />
-            </div>
-          </div>
-        </div>
       </div>
     </Connectable>
-  );
-}
-
-function Ripples({
-  connId,
-  align,
-}: {
-  connId: string;
-  align: "left" | "right";
-}) {
-  const refs = (CONNECTIONS[connId] ?? []).slice(0, 5);
-  if (refs.length === 0) return null;
-  return (
-    <div className="pt-2">
-      <div
-        className="mono-label mb-2 text-[0.6rem]"
-        style={{ color: "var(--accent)" }}
-      >
-        Ripples
-      </div>
-      <div
-        className={`flex flex-wrap items-center gap-1.5 ${
-          align === "right" ? "md:justify-end" : ""
-        }`}
-      >
-        {refs.map((id, i) => (
-          <span key={id} className="flex items-center gap-1.5">
-            {i > 0 && (
-              <span
-                aria-hidden
-                className="mono-label text-[0.6rem]"
-                style={{ color: "var(--rail)" }}
-              >
-                →
-              </span>
-            )}
-            <RefPill id={id} small />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Beat({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <div className="mono-label mb-1 text-[0.6rem]" style={{ color: "var(--accent)" }}>
-        {label}
-      </div>
-      <div>{children}</div>
-    </div>
   );
 }
 

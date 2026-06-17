@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { useConnections } from "@/components/ConnectionContext";
 
-type NodeId =
-  | "now"
-  | "hardware"
-  | "semi"
-  | "ai"
-  | "robotics"
-  | "design"
-  | "startups";
+type NodeId = "now" | "hardware" | "semi" | "ai" | "robotics" | "design" | "startups";
 
 const POS: Record<NodeId, { x: number; y: number }> = {
   now: { x: 50, y: 50 },
@@ -76,10 +69,7 @@ export function InterestMap() {
   const isNodeActive = (id: NodeId) => {
     if (hover) {
       if (id === hover) return true;
-      return EDGES.some(
-        ([a, b]) =>
-          (a === hover && b === id) || (b === hover && a === id),
-      );
+      return EDGES.some(([a, b]) => (a === hover && b === id) || (b === hover && a === id));
     }
     return externalActive(id) || id === "now";
   };
@@ -184,9 +174,10 @@ export function InterestMap() {
                     ? "var(--accent)"
                     : "var(--foreground)",
                 opacity: faded ? 0.35 : 1,
-                boxShadow: active && !isCenter
-                  ? "0 6px 22px -10px color-mix(in oklab, var(--accent) 60%, transparent)"
-                  : "none",
+                boxShadow:
+                  active && !isCenter
+                    ? "0 6px 22px -10px color-mix(in oklab, var(--accent) 60%, transparent)"
+                    : "none",
               }}
             >
               {LABEL[id]}

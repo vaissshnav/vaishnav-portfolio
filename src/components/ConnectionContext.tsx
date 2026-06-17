@@ -9,7 +9,6 @@ import {
   type ReactNode,
 } from "react";
 
-
 /**
  * Global cross-section connection registry.
  *
@@ -276,11 +275,13 @@ export function Connectable({
   children,
   className,
   as = "div",
+  showRefs = true,
 }: {
   id: string;
   children: ReactNode;
   className?: string;
   as?: "div" | "article" | "section" | "li" | "span";
+  showRefs?: boolean;
 }) {
   const { setHovered, isConnected, isHovered, isRelevant, hovered, showAll, connectionsOf } =
     useConnections();
@@ -304,8 +305,7 @@ export function Connectable({
       style={{
         position: "relative",
         zIndex: hoveredSelf || connected ? 20 : 2,
-        transition:
-          "outline-color 250ms ease, box-shadow 250ms ease, opacity 250ms ease",
+        transition: "outline-color 250ms ease, box-shadow 250ms ease, opacity 250ms ease",
         outline: connected ? "1px solid var(--accent)" : "1px solid transparent",
         outlineOffset: connected ? "6px" : "0px",
         borderRadius: 12,
@@ -313,7 +313,7 @@ export function Connectable({
       }}
     >
       {children}
-      {showAll && refs.length > 0 && (
+      {showRefs && showAll && refs.length > 0 && (
         <div
           className="mono-label pointer-events-auto mt-3 flex flex-wrap gap-1.5 text-[0.55rem] opacity-90"
           aria-hidden
@@ -329,15 +329,7 @@ export function Connectable({
 }
 
 /** A hoverable pill that drives the global connection highlight when hovered. */
-export function RefPill({
-  id,
-  active,
-  small,
-}: {
-  id: string;
-  active?: boolean;
-  small?: boolean;
-}) {
+export function RefPill({ id, active, small }: { id: string; active?: boolean; small?: boolean }) {
   const { setHovered, hovered } = useConnections();
   const lit = hovered === id || active;
   return (
@@ -353,16 +345,13 @@ export function RefPill({
       style={{
         borderColor: lit ? "var(--accent)" : "var(--rail)",
         color: lit ? "var(--accent)" : "var(--muted-foreground)",
-        backgroundColor: lit
-          ? "color-mix(in oklab, var(--accent) 8%, transparent)"
-          : "transparent",
+        backgroundColor: lit ? "color-mix(in oklab, var(--accent) 8%, transparent)" : "transparent",
       }}
     >
       {LABELS[id] ?? id}
     </button>
   );
 }
-
 
 /**
  * Full-document overlay rendered BEHIND content (z-index: 0). Cards have
@@ -378,9 +367,7 @@ function ConnectionOverlay() {
     Array<{ d: string; key: string; strong: boolean; a: string; b: string }>
   >([]);
   const [docHeight, setDocHeight] = useState(0);
-  const [tip, setTip] = useState<{ x: number; y: number; a: string; b: string } | null>(
-    null,
-  );
+  const [tip, setTip] = useState<{ x: number; y: number; a: string; b: string } | null>(null);
   const [ready, setReady] = useState(false);
   const rafRef = useRef<number | null>(null);
 
@@ -449,12 +436,7 @@ function ConnectionOverlay() {
       }
 
       setPaths(next);
-      setDocHeight(
-        Math.max(
-          document.documentElement.scrollHeight,
-          document.body.scrollHeight,
-        ),
-      );
+      setDocHeight(Math.max(document.documentElement.scrollHeight, document.body.scrollHeight));
     };
 
     const schedule = () => {
@@ -529,9 +511,7 @@ function ConnectionOverlay() {
               stroke="transparent"
               strokeWidth={14}
               style={{ pointerEvents: "stroke", cursor: "help" }}
-              onMouseMove={(e) =>
-                setTip({ x: e.clientX, y: e.clientY, a: p.a, b: p.b })
-              }
+              onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, a: p.a, b: p.b })}
               onMouseLeave={() => setTip(null)}
             />
           </g>
@@ -542,17 +522,7 @@ function ConnectionOverlay() {
   );
 }
 
-function RelationTooltip({
-  x,
-  y,
-  a,
-  b,
-}: {
-  x: number;
-  y: number;
-  a: string;
-  b: string;
-}) {
+function RelationTooltip({ x, y, a, b }: { x: number; y: number; a: string; b: string }) {
   const rel = getRelation(a, b);
   return (
     <div
@@ -566,18 +536,11 @@ function RelationTooltip({
         maxWidth: 240,
       }}
     >
-      <div className="font-serif text-sm leading-tight text-foreground">
-        {LABELS[a] ?? a}
-      </div>
-      <div
-        className="mono-label my-1 text-[0.55rem]"
-        style={{ color: "var(--accent)" }}
-      >
+      <div className="font-serif text-sm leading-tight text-foreground">{LABELS[a] ?? a}</div>
+      <div className="mono-label my-1 text-[0.55rem]" style={{ color: "var(--accent)" }}>
         ↓ {rel} ↓
       </div>
-      <div className="font-serif text-sm leading-tight text-foreground">
-        {LABELS[b] ?? b}
-      </div>
+      <div className="font-serif text-sm leading-tight text-foreground">{LABELS[b] ?? b}</div>
     </div>
   );
 }

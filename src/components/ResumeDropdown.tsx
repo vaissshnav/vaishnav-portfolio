@@ -21,7 +21,7 @@ export function ResumeDropdown() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleDownload = (resume: typeof RESUMES[0]) => {
+  const handleDownload = (resume: (typeof RESUMES)[0]) => {
     window.location.href = `/resume-${resume.id}.pdf`;
     setIsOpen(false);
   };
@@ -33,7 +33,13 @@ export function ResumeDropdown() {
         className="mono-label flex items-center gap-1.5 px-3 py-1 rounded text-[0.65rem] transition-colors hover:text-accent"
       >
         Get my resume
-        <ChevronDown className="h-3 w-3" style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 200ms" }} />
+        <ChevronDown
+          className="h-3 w-3"
+          style={{
+            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 200ms",
+          }}
+        />
       </button>
 
       {isOpen && (

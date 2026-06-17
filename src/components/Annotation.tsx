@@ -1,9 +1,5 @@
 import { type ReactNode } from "react";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { useConnections, LABELS } from "@/components/ConnectionContext";
 
 export function Annotation({
@@ -45,9 +41,7 @@ export function Annotation({
       >
         <div className="mono-label mb-2">{meta ?? "Annotation"}</div>
         <div className="font-serif text-lg leading-snug text-foreground">{label}</div>
-        {body && (
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-        )}
+        {body && <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>}
         {(memory || project) && (
           <div
             className="mt-3 space-y-2 border-t pt-3 text-xs leading-relaxed"
