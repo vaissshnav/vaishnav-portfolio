@@ -24,7 +24,7 @@ const NODES: JourneyNode[] = [
     year: "2022",
     subtitle: "The first serious craft",
     summary:
-      "Long before the startups and electronics, the first real obsession was visual and interaction design — copying, redrawing, deconstructing interfaces to understand why they worked.",
+      "Long before the startups and electronics, the first real obsession was visual and interaction design; copying, redrawing, deconstructing interfaces to understand why they worked.",
     logo: "DSGN",
     tags: ["Design", "Craft", "Self-taught"],
   },
@@ -35,7 +35,7 @@ const NODES: JourneyNode[] = [
     year: "Aug 2023 — Nov 2023",
     subtitle: "UI/UX Design Intern",
     summary:
-      "First professional design work — ERP software for schools. Real users, real constraints, real opinions.",
+      "First professional design work; ERP software for schools. Real users, real constraints, real opinions.",
     logo: "EF",
     tags: ["Design", "UX", "Interfaces"],
   },
@@ -57,7 +57,7 @@ const NODES: JourneyNode[] = [
     year: "Oct 2024 — Apr 2025",
     subtitle: "Founder's Office & Operations Intern",
     summary:
-      "Worked close to 0 → 1 — product research, onboarding, UX decisions, GTM conversations, the operational glue.",
+      "Worked close to 0 → 1; product research, onboarding, UX decisions, GTM conversations, the operational glue.",
     logo: "WMS",
     tags: ["Product", "Users", "Execution"],
   },
@@ -90,7 +90,7 @@ const NODES: JourneyNode[] = [
     year: "2025",
     subtitle: "Committing to the hardware track",
     summary:
-      "A deliberate decision to orient education and research around hardware, semiconductors and the infrastructure beneath AI — not as a side interest, but as the main one.",
+      "A deliberate decision to orient education and research around hardware, semiconductors and the infrastructure beneath AI; not as a side interest, but as the main one.",
     logo: "MIT",
     tags: ["Pathway", "Hardware", "Commitment"],
   },
@@ -101,7 +101,7 @@ const NODES: JourneyNode[] = [
     year: "2025 — Now",
     subtitle: "Where the curiosity is pointing",
     summary:
-      "Increasingly moved toward Electronics & Computer Engineering — semiconductors, robotics, AI infrastructure, systems that create leverage.",
+      "Increasingly moved toward Electronics & Computer Engineering; semiconductors, robotics, AI infrastructure, systems that create leverage.",
     logo: "NOW",
     tags: ["Semiconductors", "Robotics", "AI Infra"],
   },
@@ -289,9 +289,8 @@ export function JourneyRail() {
               />
 
               <div
-                className={`pl-12 md:pl-0 ${
-                  isLeft ? "md:col-start-1 md:pr-10 md:text-right" : "md:col-start-2 md:pl-10"
-                }`}
+                className={`pl-12 md:pl-0 ${isLeft ? "md:col-start-1 md:pr-10 md:text-right" : "md:col-start-2 md:pl-10"
+                  }`}
               >
                 <JourneyCard node={node} isActive={isActive} align={isLeft ? "right" : "left"} />
               </div>
@@ -351,9 +350,8 @@ function JourneyCard({
         }}
       >
         <header
-          className={`flex items-start gap-4 ${
-            align === "right" ? "md:flex-row-reverse md:text-right" : ""
-          }`}
+          className={`flex items-start gap-4 ${align === "right" ? "md:flex-row-reverse md:text-right" : ""
+            }`}
         >
           <LogoSlot label={node.logo ?? node.title.slice(0, 3)} active={isActive} />
           <div className="min-w-0 flex-1">

@@ -147,7 +147,8 @@
     border-color: var(--color-border);
   }
 
-  html, body {
+  html,
+  body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -162,8 +163,12 @@
   }
 }
 
-@utility font-serif { font-family: var(--font-serif); }
-@utility font-mono  { font-family: var(--font-mono); }
+@utility font-serif {
+  font-family: var(--font-serif);
+}
+@utility font-mono {
+  font-family: var(--font-mono);
+}
 
 @utility mono-label {
   font-family: var(--font-mono);
@@ -178,13 +183,23 @@
   cursor: help;
   border-bottom: 1px dotted color-mix(in oklab, var(--accent) 60%, transparent);
   padding-bottom: 1px;
-  transition: color 200ms ease, border-color 200ms ease;
+  transition:
+    color 200ms ease,
+    border-color 200ms ease;
 }
 @utility annotated-trigger {
-  &:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  &:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
 }
 
 @keyframes rail-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }

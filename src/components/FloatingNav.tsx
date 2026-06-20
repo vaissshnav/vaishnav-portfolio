@@ -37,10 +37,20 @@ export function FloatingNav() {
     setActive(id);
     const element = document.getElementById(id);
     if (element) {
-      const extraOffset = id === "contact" ? window.innerHeight * 0.15 :
-                          id === "reading" ? window.innerHeight * 0.01 : 
-                          id === "journey" ? -window.innerHeight * 1.2 : 0;
-      const top = element.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2 + element.getBoundingClientRect().height / 2 + extraOffset;
+      const extraOffset =
+        id === "contact"
+          ? window.innerHeight * 0.15
+          : id === "reading"
+            ? window.innerHeight * 0.01
+            : id === "journey"
+              ? -window.innerHeight * 1.2
+              : 0;
+      const top =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        window.innerHeight / 2 +
+        element.getBoundingClientRect().height / 2 +
+        extraOffset;
       window.scrollTo({ top, behavior: "smooth" });
     }
   };

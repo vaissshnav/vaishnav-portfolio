@@ -16,7 +16,7 @@ const BOOKS: Book[] = [
     title: "Chip War",
     author: "Chris Miller",
     whyItMattered:
-      "Turned a vague interest in hardware into a specific interest in semiconductors — the slow, expensive, geopolitical layer underneath everything.",
+      "Turned a vague interest in hardware into a specific interest in semiconductors; the slow, expensive, geopolitical layer underneath everything.",
     keyIdea:
       "Compute is a physical asset. Whoever controls the manufacturing controls the ceiling of what the rest of the stack can do.",
   },
@@ -26,7 +26,7 @@ const BOOKS: Book[] = [
     title: "Poor Charlie's Almanack",
     author: "Charles T. Munger",
     whyItMattered:
-      "Reframed how I think about leverage — not as effort, but as a chosen position. Quietly reorganized how I evaluate every decision around Whomr.",
+      "Reframed how I think about leverage; not as effort, but as a chosen position. Quietly reorganized how I evaluate every decision around Whomr.",
     keyIdea:
       "Worldly wisdom is a latticework of mental models. The person with more models sees the same situation more clearly.",
   },
@@ -51,9 +51,8 @@ export function ReadingList() {
             key={b.id}
             id={b.connId}
             as="article"
-            className={`rounded-lg border border-border bg-card p-4 ${
-              i === 0 ? "md:col-span-2 md:grid md:grid-cols-[1fr_2fr] md:gap-4" : ""
-            }`}
+            className={`rounded-lg border border-border bg-card p-4 ${i === 0 ? "md:col-span-2 md:grid md:grid-cols-[1fr_2fr] md:gap-4" : ""
+              }`}
           >
             <div style={{ borderColor: "var(--border)" }}>
               <h3 className="font-serif text-2xl text-foreground">{b.title}</h3>

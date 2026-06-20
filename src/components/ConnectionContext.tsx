@@ -9,31 +9,17 @@ import {
   type ReactNode,
 } from "react";
 
-/**
- * Global cross-section connection registry.
- *
- * IDs use prefixes so the graph stays readable:
- *   j-*  journey milestones
- *   i-*  current interests
- *   n-*  notes / observations
- *   b-*  books
- *   a-*  about keywords
- */
-
 export const CONNECTIONS: Record<string, string[]> = {
-  // Journey (chronological)
   "j-early-design": ["i-design", "j-eonforge"],
-  "j-eonforge": ["i-design", "j-wemus", "j-whomr", "b-3"],
+  "j-eonforge": ["i-design", "j-whomr", "b-3"],
   "j-whomr": ["i-startups", "i-design", "j-wemus", "n-1", "b-2"],
   "j-interninvy": ["i-startups", "j-wemus"],
   "j-pushnote": ["i-design", "i-startups"],
-  "j-wemus": ["i-design", "i-startups", "j-whomr", "j-eonforge", "n-1"],
+  "j-wemus": ["i-design", "i-startups", "j-whomr", "n-1"],
   "j-afc": ["i-design", "i-startups", "n-2", "b-2"],
   "j-reading-turn": ["b-1", "b-2", "i-semi", "j-electronics"],
   "j-mit-pathway": ["j-electronics", "i-hardware", "i-semi"],
   "j-electronics": ["i-hardware", "i-semi", "i-robotics", "i-ai", "b-1", "n-3"],
-
-  // Interests
   "i-hardware": ["i-semi", "i-robotics", "i-ai", "j-electronics", "j-mit-pathway", "b-1"],
   "i-semi": ["i-hardware", "i-ai", "j-electronics", "b-1", "n-3", "n-4", "a-semi"],
   "i-robotics": ["i-hardware", "i-ai", "j-electronics", "a-robotics"],
@@ -41,19 +27,13 @@ export const CONNECTIONS: Record<string, string[]> = {
   "i-design": ["j-early-design", "j-wemus", "j-eonforge", "j-whomr", "j-afc", "i-startups"],
   "i-startups": ["j-whomr", "j-wemus", "j-interninvy", "i-design", "n-1", "b-2", "a-leverage"],
   "i-now": ["i-hardware", "i-semi", "i-robotics", "i-ai", "i-design", "i-startups"],
-
-  // Observations
   "n-1": ["j-whomr", "i-startups", "b-2"],
   "n-2": ["j-afc", "i-design", "i-startups"],
   "n-3": ["i-semi", "i-hardware", "j-electronics", "b-1"],
   "n-4": ["i-semi", "i-ai", "b-1"],
-
-  // Books
   "b-1": ["i-semi", "i-hardware", "j-electronics", "j-reading-turn", "n-3", "n-4"],
   "b-2": ["i-startups", "j-whomr", "j-afc", "j-reading-turn", "n-1"],
   "b-3": ["i-design", "j-eonforge", "j-wemus"],
-
-  // About keywords
   "a-manipal": ["j-electronics", "j-mit-pathway"],
   "a-semi": ["i-semi", "j-electronics", "b-1"],
   "a-robotics": ["i-robotics"],
@@ -93,13 +73,7 @@ export const LABELS: Record<string, string> = {
   "a-leverage": "Leverage",
 };
 
-/**
- * Edge-level relationships. Keyed `source->target`.
- * The overlay tooltip shows: Source ↓ relationship ↓ Destination.
- * If a relationship is missing, it falls back to "connects to".
- */
 export const RELATIONS: Record<string, string> = {
-  // Books → notes / interests / journey
   "b-2->n-1": "influenced",
   "b-2->i-startups": "shaped my view of",
   "b-2->j-whomr": "kept me honest through",
@@ -114,8 +88,6 @@ export const RELATIONS: Record<string, string> = {
   "b-3->i-design": "shaped my view of",
   "b-3->j-eonforge": "set the lens for",
   "b-3->j-wemus": "set the lens for",
-
-  // Notes → sources
   "n-1->j-whomr": "came out of",
   "n-1->i-startups": "applies to",
   "n-1->b-2": "echoes",
@@ -129,8 +101,6 @@ export const RELATIONS: Record<string, string> = {
   "n-4->i-semi": "applies to",
   "n-4->i-ai": "applies to",
   "n-4->b-1": "echoes",
-
-  // Journey → journey / interests
   "j-early-design->i-design": "seeded",
   "j-early-design->j-eonforge": "led to",
   "j-eonforge->i-design": "deepened",
@@ -148,7 +118,7 @@ export const RELATIONS: Record<string, string> = {
   "j-wemus->i-design": "deepened",
   "j-wemus->i-startups": "deepened",
   "j-wemus->j-whomr": "ran alongside",
-  "j-wemus->j-eonforge": "built on",
+  // removed: "j-wemus->j-eonforge": "built on",
   "j-wemus->n-1": "produced",
   "j-afc->i-design": "applied",
   "j-afc->i-startups": "applied",
@@ -167,8 +137,6 @@ export const RELATIONS: Record<string, string> = {
   "j-electronics->i-ai": "committed to",
   "j-electronics->b-1": "echoes",
   "j-electronics->n-3": "produced",
-
-  // Interest ↔ interest (thinking map)
   "i-hardware->i-semi": "depends on",
   "i-hardware->i-robotics": "powers",
   "i-hardware->i-ai": "powers",
@@ -181,8 +149,6 @@ export const RELATIONS: Record<string, string> = {
   "i-robotics->i-ai": "depends on",
   "i-design->i-startups": "feeds",
   "i-startups->i-design": "demands",
-
-  // About keywords
   "a-manipal->j-electronics": "is the setting for",
   "a-manipal->j-mit-pathway": "is the setting for",
   "a-semi->i-semi": "names",
@@ -199,19 +165,9 @@ export function getRelation(a: string, b: string): string {
   return RELATIONS[`${a}->${b}`] ?? RELATIONS[`${b}->${a}`] ?? "connects to";
 }
 
-/** Curated narrative chain that the connection overlay draws across sections. */
 const NARRATIVE_CHAIN: string[] = [
-  "j-early-design",
-  "j-eonforge",
-  "j-whomr",
-  "j-wemus",
-  "j-afc",
-  "i-design",
-  "i-startups",
-  "j-reading-turn",
-  "i-semi",
-  "i-ai",
-  "j-electronics",
+  "j-early-design", "j-eonforge", "j-whomr", "j-wemus", "j-afc",
+  "i-design", "i-startups", "j-reading-turn", "i-semi", "i-ai", "j-electronics",
 ];
 
 type Ctx = {
@@ -221,7 +177,7 @@ type Ctx = {
   toggleShowAll: () => void;
   isConnected: (id: string) => boolean;
   isHovered: (id: string) => boolean;
-  isRelevant: (id: string) => boolean; // hovered or directly connected to hover
+  isRelevant: (id: string) => boolean;
   connectionsOf: (id: string) => string[];
 };
 
@@ -245,14 +201,9 @@ export function ConnectionProvider({ children }: { children: ReactNode }) {
       return (CONNECTIONS[hovered] ?? []).includes(id) || (CONNECTIONS[id] ?? []).includes(hovered);
     };
     return {
-      hovered,
-      setHovered,
-      showAll,
-      toggleShowAll: () => {},
-      isConnected,
-      isHovered,
-      isRelevant,
-      connectionsOf,
+      hovered, setHovered, showAll,
+      toggleShowAll: () => { },
+      isConnected, isHovered, isRelevant, connectionsOf,
     };
   }, [hovered, showAll]);
 
@@ -270,19 +221,11 @@ export function useConnections() {
   return ctx;
 }
 
-/** Wrap any element so it participates in the connection graph. */
 export function Connectable({
-  id,
-  children,
-  className,
-  as = "div",
-  showRefs = true,
+  id, children, className, as = "div", showRefs = true,
 }: {
-  id: string;
-  children: ReactNode;
-  className?: string;
-  as?: "div" | "article" | "section" | "li" | "span";
-  showRefs?: boolean;
+  id: string; children: ReactNode; className?: string;
+  as?: "div" | "article" | "section" | "li" | "span"; showRefs?: boolean;
 }) {
   const { setHovered, isConnected, isHovered, isRelevant, hovered, showAll, connectionsOf } =
     useConnections();
@@ -293,8 +236,6 @@ export function Connectable({
 
   const handleEnter = useCallback(() => setHovered(id), [id, setHovered]);
   const handleLeave = useCallback(() => setHovered(null), [setHovered]);
-
-  // Focused-connection-mode fade: when any node is hovered, fade unrelated ones.
   const faded = hovered ? !isRelevant(id) : false;
 
   return (
@@ -314,22 +255,10 @@ export function Connectable({
       }}
     >
       {children}
-      {showRefs && showAll && refs.length > 0 && (
-        <div
-          className="mono-label pointer-events-auto mt-3 flex flex-wrap gap-1.5 text-[0.55rem] opacity-90"
-          aria-hidden
-        >
-          <span style={{ color: "var(--accent)" }}>↳</span>
-          {refs.slice(0, 5).map((r) => (
-            <RefPill key={r} id={r} active={hoveredSelf} />
-          ))}
-        </div>
-      )}
     </As>
   );
 }
 
-/** A hoverable pill that drives the global connection highlight when hovered. */
 export function RefPill({ id, active, small }: { id: string; active?: boolean; small?: boolean }) {
   const { setHovered, hovered } = useConnections();
   const lit = hovered === id || active;
@@ -340,9 +269,7 @@ export function RefPill({ id, active, small }: { id: string; active?: boolean; s
       onMouseLeave={() => setHovered(null)}
       onFocus={() => setHovered(id)}
       onBlur={() => setHovered(null)}
-      className={`mono-label rounded-sm border transition-colors ${
-        small ? "px-1.5 py-0.5 text-[0.55rem]" : "px-2 py-0.5 text-[0.6rem]"
-      }`}
+      className={`mono-label rounded-sm border transition-colors ${small ? "px-1.5 py-0.5 text-[0.55rem]" : "px-2 py-0.5 text-[0.6rem]"}`}
       style={{
         borderColor: lit ? "var(--accent)" : "var(--rail)",
         color: lit ? "var(--accent)" : "var(--muted-foreground)",
@@ -354,25 +281,29 @@ export function RefPill({ id, active, small }: { id: string; active?: boolean; s
   );
 }
 
-/**
- * Full-document overlay rendered BEHIND content (z-index: 0). Cards have
- * opaque backgrounds (bg-card) so they cover lines passing through them —
- * lines remain visible only in the gaps between cards, never on top of text.
- *
- * Each path is interactive (pointer-events on the stroke) and shows a
- * tooltip describing the relationship: Source ↓ relationship ↓ Destination.
- */
+/** Returns a short label for a target node, e.g. "Design" or "Chip War" */
+function shortLabel(id: string): string {
+  return LABELS[id] ?? id;
+}
+
+interface PathData {
+  d: string;
+  key: string;
+  strong: boolean;
+  a: string;
+  b: string;
+  midX: number;
+  midY: number;
+}
+
 function ConnectionOverlay() {
   const { showAll, hovered } = useConnections();
-  const [paths, setPaths] = useState<
-    Array<{ d: string; key: string; strong: boolean; a: string; b: string }>
-  >([]);
+  const [paths, setPaths] = useState<PathData[]>([]);
   const [docHeight, setDocHeight] = useState(0);
   const [tip, setTip] = useState<{ x: number; y: number; a: string; b: string } | null>(null);
   const [ready, setReady] = useState(false);
   const rafRef = useRef<number | null>(null);
 
-  // Delay lines so cards render first without visual competition
   useEffect(() => {
     setReady(false);
     const timer = setTimeout(() => setReady(true), 400);
@@ -387,42 +318,52 @@ function ConnectionOverlay() {
     }
 
     const compute = () => {
-      const centers: Record<string, { x: number; y: number }> = {};
+      const centers: Record<string, { cx: number; cy: number; bottom: number; left: number; right: number; w: number }> = {};
       document.querySelectorAll<HTMLElement>("[data-conn-id]").forEach((el) => {
         const id = el.dataset.connId!;
         if (centers[id]) return;
         const r = el.getBoundingClientRect();
         centers[id] = {
-          x: r.left + window.scrollX + r.width / 2,
-          y: r.top + window.scrollY + r.height / 2,
+          cx: r.left + window.scrollX + r.width / 2,
+          cy: r.top + window.scrollY + r.height / 2,
+          bottom: r.top + window.scrollY + r.height,
+          left: r.left + window.scrollX,
+          right: r.right + window.scrollX,
+          w: r.width,
         };
       });
 
-      const next: Array<{
-        d: string;
-        key: string;
-        strong: boolean;
-        a: string;
-        b: string;
-      }> = [];
+      const next: PathData[] = [];
+      let connCounts: Record<string, number> = {};
 
       const pushPath = (aId: string, bId: string, strong: boolean) => {
         const a = centers[aId];
         const b = centers[bId];
         if (!a || !b) return;
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const c1x = a.x + dx * 0.15;
-        const c1y = a.y + dy * 0.55;
-        const c2x = a.x + dx * 0.85;
-        const c2y = a.y + dy * 0.45;
-        next.push({
-          d: `M ${a.x},${a.y} C ${c1x},${c1y} ${c2x},${c2y} ${b.x},${b.y}`,
-          key: `${aId}->${bId}-${strong ? "s" : "w"}`,
-          strong,
-          a: aId,
-          b: bId,
-        });
+
+        // Spread origin points across bottom of source card
+        if (!connCounts[aId]) connCounts[aId] = 0;
+        const idx = connCounts[aId];
+        connCounts[aId] = idx + 1;
+        const total = (CONNECTIONS[aId] ?? []).length || 1;
+        const spreadFraction = total > 1 ? idx / (total - 1) : 0.5;
+        // Start from bottom of card, spread horizontally
+        const aStartX = a.left + a.w * 0.15 + spreadFraction * a.w * 0.7;
+        const aStartY = a.bottom;
+
+        const dx = b.cx - aStartX;
+        const dy = b.cy - aStartY;
+        const c1x = aStartX + dx * 0.1;
+        const c1y = aStartY + dy * 0.4;
+        const c2x = aStartX + dx * 0.8;
+        const c2y = b.cy + dy * 0.5;
+
+        // Label position: very close to card (t=0.1)
+        const t = 0.1;
+        const mt = 1 - t;
+        const midX = mt * mt * mt * aStartX + 3 * mt * mt * t * c1x + 3 * mt * t * t * c2x + t * t * t * b.cx;
+        const midY = mt * mt * mt * aStartY + 3 * mt * mt * t * c1y + 3 * mt * t * t * c2y + t * t * t * b.cy;
+        next.push({ d: `M ${aStartX},${aStartY} C ${c1x},${c1y} ${c2x},${c2y} ${b.cx},${b.cy}`, key: `${aId}->${bId}`, strong, a: aId, b: bId, midX, midY });
       };
 
       if (showAll) {
@@ -431,9 +372,7 @@ function ConnectionOverlay() {
         }
       }
       if (hovered) {
-        (CONNECTIONS[hovered] ?? []).forEach((target) => {
-          pushPath(hovered, target, true);
-        });
+        (CONNECTIONS[hovered] ?? []).forEach((target) => pushPath(hovered, target, true));
       }
 
       setPaths(next);
@@ -468,25 +407,11 @@ function ConnectionOverlay() {
         className="absolute left-0 top-0"
         width="100%"
         height={docHeight}
-        style={{
-          position: "absolute",
-          overflow: "visible",
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
+        style={{ position: "absolute", overflow: "visible", zIndex: 0, pointerEvents: "none" }}
       >
-        <defs>
-          <filter id="conn-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="1.4" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
         {paths.map((p) => (
           <g key={p.key}>
-            {/* visible stroke */}
+            {/* Visible path */}
             <path
               d={p.d}
               fill="none"
@@ -495,17 +420,11 @@ function ConnectionOverlay() {
               strokeOpacity={p.strong ? 0.55 : 0.22}
               strokeDasharray="3 6"
               strokeLinecap="round"
-              filter={p.strong ? "url(#conn-glow)" : undefined}
               style={{ transition: "stroke-opacity 250ms ease" }}
             >
-              <animate
-                attributeName="stroke-dashoffset"
-                values="0;-18"
-                dur={p.strong ? "1.6s" : "3.2s"}
-                repeatCount="indefinite"
-              />
+              <animate attributeName="stroke-dashoffset" values="0;-18" dur={p.strong ? "1.6s" : "3.2s"} repeatCount="indefinite" />
             </path>
-            {/* invisible thick hit-target for hover */}
+            {/* Invisible hover target */}
             <path
               d={p.d}
               fill="none"
@@ -515,33 +434,55 @@ function ConnectionOverlay() {
               onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, a: p.a, b: p.b })}
               onMouseLeave={() => setTip(null)}
             />
+            {/* Label very close to card (skip for i-now — too crowded) */}
+            {p.strong && p.a !== "i-now" && (
+              <>
+                <rect
+                  x={p.midX - 24}
+                  y={p.midY - 9}
+                  width={48}
+                  height={18}
+                  rx={9}
+                  fill="var(--background)"
+                  fillOpacity={0.85}
+                  stroke="var(--accent)"
+                  strokeWidth={0.4}
+                  strokeOpacity={0.4}
+                />
+                <text
+                  x={p.midX}
+                  y={p.midY + 4}
+                  textAnchor="middle"
+                  fill="var(--accent)"
+                  fontSize={7.5}
+                  fontWeight={600}
+                  fontFamily="monospace"
+                  opacity={0.85}
+                >
+                  {shortLabel(p.b)}
+                </text>
+              </>
+            )}
           </g>
         ))}
       </svg>
-      {tip && <RelationTooltip {...tip} />}
+      {tip && (
+        <div
+          role="tooltip"
+          className="pointer-events-none fixed z-[60] rounded-md border bg-card px-3 py-2 text-left shadow-lg backdrop-blur-md"
+          style={{
+            left: tip.x + 14,
+            top: tip.y + 14,
+            borderColor: "var(--accent)",
+            backgroundColor: "color-mix(in oklab, var(--background) 94%, transparent)",
+            maxWidth: 240,
+          }}
+        >
+          <div className="font-serif text-sm leading-tight text-foreground">{LABELS[tip.a] ?? tip.a}</div>
+          <div className="mono-label my-1 text-[0.55rem]" style={{ color: "var(--accent)" }}>↓ {getRelation(tip.a, tip.b)} ↓</div>
+          <div className="font-serif text-sm leading-tight text-foreground">{LABELS[tip.b] ?? tip.b}</div>
+        </div>
+      )}
     </>
-  );
-}
-
-function RelationTooltip({ x, y, a, b }: { x: number; y: number; a: string; b: string }) {
-  const rel = getRelation(a, b);
-  return (
-    <div
-      role="tooltip"
-      className="pointer-events-none fixed z-[60] rounded-md border bg-card px-3 py-2 text-left shadow-lg backdrop-blur-md"
-      style={{
-        left: x + 14,
-        top: y + 14,
-        borderColor: "var(--accent)",
-        backgroundColor: "color-mix(in oklab, var(--background) 94%, transparent)",
-        maxWidth: 240,
-      }}
-    >
-      <div className="font-serif text-sm leading-tight text-foreground">{LABELS[a] ?? a}</div>
-      <div className="mono-label my-1 text-[0.55rem]" style={{ color: "var(--accent)" }}>
-        ↓ {rel} ↓
-      </div>
-      <div className="font-serif text-sm leading-tight text-foreground">{LABELS[b] ?? b}</div>
-    </div>
   );
 }

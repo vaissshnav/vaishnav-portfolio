@@ -8,21 +8,22 @@ import { ReadingList } from "@/components/ReadingList";
 import { SectionRail } from "@/components/SectionRail";
 import { ResumeDropdown } from "@/components/ResumeDropdown";
 import { ConnectionProvider } from "@/components/ConnectionContext";
+import { ParticleBackground } from "@/components/ParticleBackground";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Vaishnav — A map of how the thinking evolved" },
+      { title: "Vaishnav - A map of how the thinking evolved" },
       {
         name: "description",
         content:
-          "A living map of how Vaishnav thinks — community, design, product, startups, and the turn toward hardware, semiconductors and AI infrastructure.",
+          "A living map of how Vaishnav thinks; community, design, product, startups, and the turn toward hardware, semiconductors and AI infrastructure.",
       },
       { property: "og:title", content: "Vaishnav" },
       {
         property: "og:description",
         content:
-          "Not a portfolio. A map of how curiosity evolved — from design and community to semiconductors, robotics and AI infrastructure.",
+          "Not a portfolio. A map of how curiosity evolved; from design and community to semiconductors, robotics and AI infrastructure.",
       },
     ],
   }),
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <ConnectionProvider>
+      <ParticleBackground />
       {/* relative + z-10 keeps page content above the connection overlay (z-0),
           so connection lines render behind cards but body bg still shows through. */}
       <div className="relative z-10 min-h-screen text-foreground">
@@ -199,7 +201,7 @@ function Interests() {
       <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_1.2fr] md:items-center">
         <div className="space-y-5 text-foreground/85">
           <p className="text-base leading-relaxed">
-            These aren't isolated interests — they influence each other. Hover any node to see what
+            These aren't isolated interests; they influence each other. Hover any node to see what
             it connects to. Everything eventually loops back to <em className="font-serif">NOW</em>.
           </p>
           <ul className="mono-label space-y-1 pt-2">
@@ -231,8 +233,7 @@ function Reading() {
         <em className="font-serif text-foreground">why it mattered</em>,{" "}
         <em className="font-serif text-foreground">key idea</em>,{" "}
         <em className="font-serif text-foreground">related interests</em>, and{" "}
-        <em className="font-serif text-foreground">related observations</em>. Content is
-        intentionally blank — to be written by hand.
+        <em className="font-serif text-foreground">related observations</em>.
       </p>
       <ReadingList />
     </section>
@@ -257,7 +258,7 @@ function Contact() {
                 "0 0 0 4px var(--background), 0 0 18px 2px color-mix(in oklab, var(--accent) 60%, transparent)",
             }}
           />
-          <div className="mono-label mt-4 text-[0.6rem]">The path continues — through people</div>
+          <div className="mono-label mt-4 text-[0.6rem]">The path continues; through people</div>
         </div>
 
         <div className="mx-auto max-w-3xl text-center">
