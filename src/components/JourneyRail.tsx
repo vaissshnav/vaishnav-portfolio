@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useRef, useState, forwardRef } from "react";
-import { Connectable, useConnections } from "@/components/ConnectionContext";
 
 export type JourneyNode = {
   id: string;
@@ -75,35 +74,13 @@ const NODES: JourneyNode[] = [
   {
     id: "reading-turn",
     connId: "j-reading-turn",
-    title: "The reading turn",
-    year: "2025",
-    subtitle: "Books that bent the direction",
+    title: "Reading — Understanding — Engineering",
+    year: "2026",
+    subtitle: "From inputs to direction to commitment",
     summary:
-      "A stretch where the inputs changed faster than the outputs. Chip War, Poor Charlie's Almanack and a handful of others quietly redirected what I cared about.",
-    logo: "READ",
-    tags: ["Books", "Direction", "Inputs"],
-  },
-  {
-    id: "mit-pathway",
-    connId: "j-mit-pathway",
-    title: "MIT pathway",
-    year: "2025",
-    subtitle: "Committing to the hardware track",
-    summary:
-      "A deliberate decision to orient education and research around hardware, semiconductors and the infrastructure beneath AI; not as a side interest, but as the main one.",
-    logo: "MIT",
-    tags: ["Pathway", "Hardware", "Commitment"],
-  },
-  {
-    id: "electronics",
-    connId: "j-electronics",
-    title: "Electronics turn",
-    year: "2025 — Now",
-    subtitle: "Where the curiosity is pointing",
-    summary:
-      "Increasingly moved toward Electronics & Computer Engineering; semiconductors, robotics, AI infrastructure, systems that create leverage.",
-    logo: "NOW",
-    tags: ["Semiconductors", "Robotics", "AI Infra"],
+      "Single handedly the most confusing periods of my life, but amidst the AI boom, when everyone focused on the applications, I was decided to think about what made it happen, the compute, the hardware. and my curiosity led me to EE at MIT M.",
+    logo: "LIFE",
+    tags: ["Books", "Hardware", "Semiconductors", "Robotics", "AI Infra"],
   },
 ];
 
@@ -336,11 +313,8 @@ function JourneyCard({
   align: "left" | "right";
 }) {
   return (
-    <Connectable
-      id={node.connId}
-      as="article"
+    <article
       className="group relative block rounded-lg border bg-card p-6 transition-all duration-300 hover:-translate-y-0.5"
-      showRefs={false}
     >
       <div
         style={{
@@ -381,7 +355,7 @@ function JourneyCard({
           </ul>
         )}
       </div>
-    </Connectable>
+    </article>
   );
 }
 
@@ -402,5 +376,3 @@ function LogoSlot({ label, active }: { label: string; active: boolean }) {
   );
 }
 
-// Re-export for index to use in continuation rail.
-export { useConnections as _useConn };

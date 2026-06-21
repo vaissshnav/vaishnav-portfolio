@@ -43,8 +43,10 @@ export function FloatingNav() {
           : id === "reading"
             ? window.innerHeight * 0.01
             : id === "journey"
-              ? -window.innerHeight * 1.2
-              : 0;
+              ? -window.innerHeight * 0.8
+              : id === "interests"
+                ? -window.innerHeight * -0.035
+                : 0;
       const top =
         element.getBoundingClientRect().top +
         window.scrollY -

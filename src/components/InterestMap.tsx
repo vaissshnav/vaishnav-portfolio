@@ -1,190 +1,265 @@
 import { useState } from "react";
 import { useConnections } from "@/components/ConnectionContext";
 
-type NodeId = "now" | "hardware" | "semi" | "ai" | "robotics" | "design" | "startups";
+type NodeId =
+    | "now"
+    | "hardware"
+    | "semi"
+    | "ai"
+    | "robotics"
+    | "design"
+    | "startups";
 
 const POS: Record<NodeId, { x: number; y: number }> = {
-  now: { x: 50, y: 50 },
-  hardware: { x: 50, y: 18 },
-  semi: { x: 78, y: 32 },
-  ai: { x: 82, y: 66 },
-  robotics: { x: 55, y: 82 },
-  startups: { x: 22, y: 68 },
-  design: { x: 22, y: 36 },
+    now: { x: 50, y: 50 },
+    hardware: { x: 50, y: 18 },
+    semi: { x: 78, y: 32 },
+    ai: { x: 82, y: 66 },
+    robotics: { x: 55, y: 82 },
+    startups: { x: 22, y: 68 },
+    design: { x: 22, y: 36 },
 };
 
 const LABEL: Record<NodeId, string> = {
-  now: "NOW",
-  hardware: "Hardware",
-  semi: "Semiconductors",
-  ai: "AI Infrastructure",
-  robotics: "Robotics",
-  design: "Design",
-  startups: "Startups",
+    now: "NOW",
+    hardware: "Hardware",
+    semi: "Semiconductors",
+    ai: "AI Infrastructure",
+    robotics: "Robotics",
+    design: "Design",
+    startups: "Startups",
 };
 
 const CONN_ID: Record<NodeId, string> = {
-  now: "i-now",
-  hardware: "i-hardware",
-  semi: "i-semi",
-  ai: "i-ai",
-  robotics: "i-robotics",
-  design: "i-design",
-  startups: "i-startups",
+    now: "i-now",
+    hardware: "i-hardware",
+    semi: "i-semi",
+    ai: "i-ai",
+    robotics: "i-robotics",
+    design: "i-design",
+    startups: "i-startups",
 };
 
-// Per spec: thinking-map edges
-const EDGES: Array<[NodeId, NodeId]> = [
-  ["hardware", "semi"],
-  ["semi", "ai"],
-  ["ai", "robotics"],
-  ["hardware", "robotics"],
-  ["ai", "startups"],
-  ["startups", "design"],
-  // everything eventually loops to NOW
-  ["hardware", "now"],
-  ["semi", "now"],
-  ["ai", "now"],
-  ["robotics", "now"],
-  ["startups", "now"],
-  ["design", "now"],
+const RELATION_EDGES: Array<[NodeId, NodeId]> = [
+    ["hardware", "now"],
+    ["semi", "now"],
+    ["ai", "now"],
+    ["robotics", "now"],
+    ["startups", "now"],
+    ["design", "now"],
+];
+
+const PRIMARY_EDGES: Array<[NodeId, NodeId]> = [
+    ["hardware", "semi"],
+    ["semi", "ai"],
+    ["hardware", "robotics"],
+    ["ai", "startups"],
+    ["startups", "design"],
+    ["robotics", "startups"],
+    ["ai", "hardware"],
 ];
 
 export function InterestMap() {
-  const [hover, setHover] = useState<NodeId | null>(null);
-  const { setHovered, hovered: globalHover } = useConnections();
+    const [hover, setHover] = useState<NodeId | null>(null);
+    const { setHovered, hovered: globalHover } = useConnections();
 
-  // Allow external (cross-section) hover to drive this map too.
-  const externalActive = (id: NodeId): boolean => {
-    if (!globalHover) return false;
-    if (globalHover === CONN_ID[id]) return true;
-    return false;
-  };
+    const externalActive = (id: NodeId): boolean => {
+        if (!globalHover) return false;
+        return globalHover === CONN_ID[id];
+    };
 
-  const isEdgeActive = (a: NodeId, b: NodeId) => {
-    if (hover) return a === hover || b === hover;
-    return false;
-  };
+    const isEdgeActive = (a: NodeId, b: NodeId) => {
+        if (!hover) return false;
+        return a === hover || b === hover;
+    };
 
-  const isNodeActive = (id: NodeId) => {
-    if (hover) {
-      if (id === hover) return true;
-      return EDGES.some(([a, b]) => (a === hover && b === id) || (b === hover && a === id));
-    }
-    return externalActive(id) || id === "now";
-  };
+    const isNodeActive = (id: NodeId) => {
+        if (hover) {
+            if (id === hover) return true;
 
-  const isNodeFaded = (id: NodeId) => {
-    if (!hover) return false;
-    return !isNodeActive(id);
-  };
+            return [...PRIMARY_EDGES, ...RELATION_EDGES].some(
+                ([a, b]) =>
+                    (a === hover && b === id) ||
+                    (b === hover && a === id)
+            );
+        }
 
-  const handleEnter = (id: NodeId) => {
-    setHover(id);
-    setHovered(CONN_ID[id]);
-  };
-  const handleLeave = () => {
-    setHover(null);
-    setHovered(null);
-  };
+        return externalActive(id) || id === "now";
+    };
 
-  return (
-    <div
-      className="relative mx-auto aspect-square w-full max-w-2xl rounded-lg border"
-      style={{
-        borderColor: "var(--border)",
-        backgroundImage:
-          "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--rail) 70%, transparent) 1px, transparent 0)",
-        backgroundSize: "22px 22px",
-      }}
-    >
-      <svg
-        viewBox="0 0 100 100"
-        className="absolute inset-0 h-full w-full"
-        preserveAspectRatio="none"
-      >
-        {EDGES.map(([a, b], i) => {
-          const active = isEdgeActive(a, b);
-          return (
-            <line
-              key={i}
-              x1={POS[a].x}
-              y1={POS[a].y}
-              x2={POS[b].x}
-              y2={POS[b].y}
-              stroke={active ? "var(--accent)" : "var(--rail)"}
-              strokeWidth={active ? 0.5 : 0.2}
-              strokeDasharray={active ? "0" : "0.6 0.6"}
-              style={{
-                transition: "stroke 250ms ease, stroke-width 250ms ease, opacity 250ms ease",
-                opacity: hover ? (active ? 1 : 0.25) : 0.7,
-              }}
-              vectorEffect="non-scaling-stroke"
+    const isNodeFaded = (id: NodeId) => {
+        if (!hover) return false;
+        return !isNodeActive(id);
+    };
+
+    const handleEnter = (id: NodeId) => {
+        setHover(id);
+        setHovered(CONN_ID[id]);
+    };
+
+    const handleLeave = () => {
+        setHover(null);
+        setHovered(null);
+    };
+
+    return (
+        <div
+            className="relative mx-auto aspect-square w-full max-w-2xl rounded-lg border overflow-hidden"
+            style={{
+                borderColor: "var(--border)",
+                backgroundImage:
+                    "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--rail) 70%, transparent) 1px, transparent 0)",
+                backgroundSize: "22px 22px",
+            }}
+        >
+            <svg
+                viewBox="0 0 100 100"
+                className="absolute inset-0 h-full w-full"
+                preserveAspectRatio="none"
             >
-              {active && (
-                <animate
-                  attributeName="stroke-dashoffset"
-                  values="0;-8"
-                  dur="1.4s"
-                  repeatCount="indefinite"
-                />
-              )}
-            </line>
-          );
-        })}
-      </svg>
+                {PRIMARY_EDGES.map(([a, b], i) => {
+                    const active =
+                        hover && (hover === a || hover === b);
 
-      {(Object.keys(POS) as NodeId[]).map((id) => {
-        const isCenter = id === "now";
-        const active = isNodeActive(id);
-        const faded = isNodeFaded(id);
-        return (
-          <button
-            key={id}
-            type="button"
-            onMouseEnter={() => handleEnter(id)}
-            onMouseLeave={handleLeave}
-            data-conn-id={CONN_ID[id]}
-            className="absolute -translate-x-1/2 -translate-y-1/2 outline-none"
-            style={{ left: `${POS[id].x}%`, top: `${POS[id].y}%` }}
-            aria-label={LABEL[id]}
-          >
-            <span
-              className={`flex items-center justify-center rounded-full border transition-all duration-300 ${
-                isCenter
-                  ? "font-mono text-[0.65rem] tracking-widest"
-                  : "font-serif whitespace-nowrap"
-              }`}
-              style={{
-                width: isCenter ? 84 : undefined,
-                minWidth: isCenter ? undefined : 110,
-                height: isCenter ? 84 : 38,
-                padding: isCenter ? undefined : "0 14px",
-                borderRadius: isCenter ? 999 : 8,
-                fontSize: isCenter ? undefined : "0.9rem",
-                borderColor: active ? "var(--accent)" : "var(--border)",
-                backgroundColor: isCenter
-                  ? "var(--foreground)"
-                  : active
-                    ? "color-mix(in oklab, var(--accent) 10%, var(--background))"
-                    : "var(--background)",
-                color: isCenter
-                  ? "var(--background)"
-                  : active
-                    ? "var(--accent)"
-                    : "var(--foreground)",
-                opacity: faded ? 0.35 : 1,
-                boxShadow:
-                  active && !isCenter
-                    ? "0 6px 22px -10px color-mix(in oklab, var(--accent) 60%, transparent)"
-                    : "none",
-              }}
-            >
-              {LABEL[id]}
-            </span>
-          </button>
-        );
-      })}
-    </div>
-  );
+                    return (
+                        <line
+                            key={`primary-${i}`}
+                            x1={POS[a].x}
+                            y1={POS[a].y}
+                            x2={POS[b].x}
+                            y2={POS[b].y}
+                            stroke={active ? "var(--accent)" : "var(--rail)"}
+                            strokeWidth={active ? 0.45 : 0.15}
+                            vectorEffect="non-scaling-stroke"
+                            style={{
+                                opacity: hover
+                                    ? active
+                                        ? 1
+                                        : 0.08
+                                    : 0.35,
+                                transition: "all 250ms ease",
+                            }}
+                        />
+                    );
+                })}
+
+                {RELATION_EDGES.map(([a, b], i) => {
+                    const active =
+                        hover && (hover === a || hover === b);
+
+                    const x1 = POS[a].x;
+                    const y1 = POS[a].y;
+                    const x2 = POS[b].x;
+                    const y2 = POS[b].y;
+
+                    const mx = (x1 + x2) / 2;
+                    const my = (y1 + y2) / 2;
+
+                    const dx = x2 - x1;
+                    const dy = y2 - y1;
+
+                    const len = Math.max(
+                        Math.sqrt(dx * dx + dy * dy),
+                        0.001
+                    );
+
+                    const curve = 10;
+
+                    const cx = mx - (dy / len) * curve;
+                    const cy = my + (dx / len) * curve;
+
+                    const path = `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`;
+
+                    return (
+                        <path
+                            key={`relation-${i}`}
+                            d={path}
+                            fill="none"
+                            stroke={active ? "var(--accent)" : "var(--rail)"}
+                            strokeWidth={active ? 0.4 : 0.15}
+                            strokeDasharray="4 5"
+                            vectorEffect="non-scaling-stroke"
+                            style={{
+                                opacity: hover
+                                    ? active
+                                        ? 0.8
+                                        : 0.04
+                                    : 0.18,
+                                transition: "all 250ms ease",
+                            }}
+                        >
+                            {active && (
+                                <animate
+                                    attributeName="stroke-dashoffset"
+                                    from="0"
+                                    to="-60"
+                                    dur="2s"
+                                    repeatCount="indefinite"
+                                />
+                            )}
+                        </path>
+                    );
+                })}
+            </svg>
+
+            {(Object.keys(POS) as NodeId[]).map((id) => {
+                const isCenter = id === "now";
+                const active = isNodeActive(id);
+                const faded = isNodeFaded(id);
+
+                return (
+                    <button
+                        key={id}
+                        type="button"
+                        onMouseEnter={() => handleEnter(id)}
+                        onMouseLeave={handleLeave}
+                        data-conn-id={CONN_ID[id]}
+                        className="absolute -translate-x-1/2 -translate-y-1/2 outline-none"
+                        style={{
+                            left: `${POS[id].x}%`,
+                            top: `${POS[id].y}%`,
+                        }}
+                        aria-label={LABEL[id]}
+                    >
+                        <span
+                            className={`flex items-center justify-center border transition-all duration-300 ${isCenter
+                                ? "font-mono text-[0.65rem] tracking-widest rounded-full"
+                                : "font-serif whitespace-nowrap rounded-lg"
+                                }`}
+                            style={{
+                                width: isCenter ? 84 : undefined,
+                                minWidth: isCenter
+                                    ? undefined
+                                    : 110,
+                                height: isCenter ? 84 : 38,
+                                padding: isCenter
+                                    ? undefined
+                                    : "0 14px",
+                                borderColor: active
+                                    ? "var(--accent)"
+                                    : "var(--border)",
+                                backgroundColor: isCenter
+                                    ? "var(--foreground)"
+                                    : active
+                                        ? "color-mix(in oklab, var(--accent) 10%, var(--background))"
+                                        : "var(--background)",
+                                color: isCenter
+                                    ? "var(--background)"
+                                    : active
+                                        ? "var(--accent)"
+                                        : "var(--foreground)",
+                                opacity: faded ? 0.35 : 1,
+                                boxShadow:
+                                    active && !isCenter
+                                        ? "0 6px 22px -10px color-mix(in oklab, var(--accent) 60%, transparent)"
+                                        : "none",
+                            }}
+                        >
+                            {LABEL[id]}
+                        </span>
+                    </button>
+                );
+            })}
+        </div>
+    );
 }

@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Not a portfolio. A map of how curiosity evolved; from design and community to semiconductors, robotics and AI infrastructure.",
+          "not a portfolio.",
       },
     ],
   }),
@@ -61,7 +61,7 @@ function Home() {
         <footer id="bottom" className="mx-auto max-w-6xl px-6 py-12">
           <div className="mono-label flex items-center justify-between">
             <span>© Vaishnav</span>
-            <span>made with ❤️</span>
+            <span>made with purpose ❤️</span>
           </div>
         </footer>
       </div>
@@ -100,7 +100,7 @@ function About() {
       </h1>
       <div className="mt-10 max-w-2xl space-y-6 text-lg leading-relaxed text-foreground/85 sm:text-xl">
         <p>
-          ECE student at{" "}
+          EE student at{" "}
           <Annotation
             label="MIT Manipal"
             meta="Education · 2026—2030"
@@ -138,7 +138,7 @@ function About() {
             label="AI"
             meta="Curiosity"
             body="the infra and data that makes modern AI possible"
-            memory="how ml training works, and how to make it better; deep computational research"
+            memory="how ml training works, and how to make it better"
             project="learning the underlying math and building small scale models"
             connId="a-ai"
           >
@@ -162,7 +162,7 @@ function About() {
         </p>
         <p className="text-foreground/70">
           This site isn't a portfolio. It's a map of curiosity. I'm still figuring out my niche.
-          This site is where I keep track of the search.
+          This site is where I keep track, and share to the world.
         </p>
       </div>
 
@@ -185,7 +185,7 @@ function Journey() {
         <em className="font-serif text-foreground">what happened</em>,{" "}
         <em className="font-serif text-foreground">what I learned</em>, and{" "}
         <em className="font-serif text-foreground">what changed afterward</em>. The rail fills as
-        you read. Expand any card to read the story.
+        you read.
       </p>
       <JourneyRail />
     </section>
@@ -212,8 +212,7 @@ function Interests() {
             <li>· Everything → NOW</li>
           </ul>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Toggle <em className="font-serif text-foreground">View connections</em> (bottom right)
-            to see how nodes here link out to journey milestones, observations and books.
+            These nodal maps are heavily inspired from Obsidian, where It all just <em className="font-serif text-foreground">connects.</em>
           </p>
         </div>
         <InterestMap />

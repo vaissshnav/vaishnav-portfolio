@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { useConnections, LABELS } from "@/components/ConnectionContext";
+import { useConnections, CONNECTIONS, LABELS } from "@/components/ConnectionContext";
 
 export function Annotation({
   children,
@@ -19,8 +19,8 @@ export function Annotation({
   project?: string;
   connId?: string;
 }) {
-  const { setHovered, connectionsOf } = useConnections();
-  const refs = connId ? connectionsOf(connId) : [];
+  const { setHovered } = useConnections();
+  const refs = connId ? (CONNECTIONS[connId] ?? []) : [];
 
   return (
     <HoverCard openDelay={120} closeDelay={80}>
