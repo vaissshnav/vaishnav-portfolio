@@ -345,7 +345,7 @@ var NODES = [
 		title: "Early design period",
 		year: "2022",
 		subtitle: "The first serious craft",
-		summary: "Long before the startups and electronics, the first real obsession was visual and interaction design; copying, redrawing, deconstructing interfaces to understand why they worked.",
+		summary: "Long before the startups and electronics, the first real obsession was visual and interaction design; copying, redrawing and deconstructing interfaces to understand why they worked.",
 		logo: "DSGN",
 		tags: [
 			"Design",
@@ -359,7 +359,7 @@ var NODES = [
 		title: "EonForge",
 		year: "Aug 2023 — Nov 2023",
 		subtitle: "UI/UX Design Intern",
-		summary: "First professional design work; ERP software for schools. Real users, real constraints, real opinions.",
+		summary: "First professional experience; ERP software for schools. Real users, real constraints, real opinions.",
 		logo: "EF",
 		tags: [
 			"Design",
@@ -387,7 +387,7 @@ var NODES = [
 		title: "Wemus",
 		year: "Oct 2024 — Apr 2025",
 		subtitle: "Founder's Office & Operations Intern",
-		summary: "Worked close to 0 → 1; product research, onboarding, UX decisions, GTM conversations, the operational glue.",
+		summary: "Worked on 0 → 1; product research, onboarding, UX decisions, GTM conversations, the operational glue.",
 		logo: "WMS",
 		tags: [
 			"Product",
@@ -401,7 +401,7 @@ var NODES = [
 		title: "AFC",
 		year: "2025 — Present",
 		subtitle: "Aspiring Filmmakers Collective",
-		summary: "Started a filmmaking community from scratch and grew it organically to 150+ members. Sessions, challenges, conversations.",
+		summary: "Started a filmmaking community from scratch and grew it organically to 150+ members. Hosting sessions, challenges, conversations.",
 		logo: "AFC",
 		tags: [
 			"Community",
@@ -415,7 +415,7 @@ var NODES = [
 		title: "Reading — Understanding — Engineering",
 		year: "2026",
 		subtitle: "From inputs to direction to commitment",
-		summary: "Single handedly the most confusing periods of my life, but amidst the AI boom, when everyone focused on the applications, I was decided to think about what made it happen, the compute, the hardware. and my curiosity led me to EE at MIT M.",
+		summary: "Single handedly the most confusing periods of my life, but amidst the AI boom, when everyone focused on the applications, I was decided to think about what made it happen, the compute, the hardware. and my curiosity led me to EEE at MIT M.",
 		logo: "LIFE",
 		tags: [
 			"Books",
@@ -1267,7 +1267,7 @@ function Home() {
 				className: "mx-auto max-w-6xl px-6 py-12",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "mono-label flex items-center justify-between",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "© Vaishnav" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "made with purpose ❤️" })]
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "© Vaishnav" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "made with purpose" })]
 				})
 			})
 		]
@@ -1319,8 +1319,8 @@ function About() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Annotation, {
 							label: "MIT Manipal",
 							meta: "Education · 2026—2030",
-							body: "Electircal Engineering.",
-							memory: "making core memories",
+							body: "Electrical Engineering.",
+							memory: "just getting started",
 							project: "working on things",
 							connId: "a-manipal",
 							children: "Manipal"
@@ -1331,7 +1331,7 @@ function About() {
 							label: "Semiconductors",
 							meta: "Curiosity",
 							body: "the layer underneath all of modern technology.",
-							memory: "it all started from jee semiconductors",
+							memory: "it all started from semiconductors during jee",
 							project: "trying to learn more about semiconductors",
 							connId: "a-semi",
 							children: "semiconductors"
@@ -1353,7 +1353,7 @@ function About() {
 							label: "AI",
 							meta: "Curiosity",
 							body: "the infra and data that makes modern AI possible",
-							memory: "how ml training works, and how to make it better",
+							memory: "being curious about how ml, neural networks and transformers work",
 							project: "learning the underlying math and building small scale models",
 							connId: "a-ai",
 							children: "AI"

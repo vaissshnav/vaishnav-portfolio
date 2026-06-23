@@ -23,7 +23,7 @@ const NODES: JourneyNode[] = [
     year: "2022",
     subtitle: "The first serious craft",
     summary:
-      "Long before the startups and electronics, the first real obsession was visual and interaction design; copying, redrawing, deconstructing interfaces to understand why they worked.",
+      "Long before the startups and electronics, the first real obsession was visual and interaction design; copying, redrawing and deconstructing interfaces to understand why they worked.",
     logo: "DSGN",
     tags: ["Design", "Craft", "Self-taught"],
   },
@@ -34,7 +34,7 @@ const NODES: JourneyNode[] = [
     year: "Aug 2023 — Nov 2023",
     subtitle: "UI/UX Design Intern",
     summary:
-      "First professional design work; ERP software for schools. Real users, real constraints, real opinions.",
+      "First professional experience; ERP software for schools. Real users, real constraints, real opinions.",
     logo: "EF",
     tags: ["Design", "UX", "Interfaces"],
   },
@@ -56,7 +56,7 @@ const NODES: JourneyNode[] = [
     year: "Oct 2024 — Apr 2025",
     subtitle: "Founder's Office & Operations Intern",
     summary:
-      "Worked close to 0 → 1; product research, onboarding, UX decisions, GTM conversations, the operational glue.",
+      "Worked on 0 → 1; product research, onboarding, UX decisions, GTM conversations, the operational glue.",
     logo: "WMS",
     tags: ["Product", "Users", "Execution"],
   },
@@ -67,7 +67,7 @@ const NODES: JourneyNode[] = [
     year: "2025 — Present",
     subtitle: "Aspiring Filmmakers Collective",
     summary:
-      "Started a filmmaking community from scratch and grew it organically to 150+ members. Sessions, challenges, conversations.",
+      "Started a filmmaking community from scratch and grew it organically to 150+ members. Hosting sessions, challenges, conversations.",
     logo: "AFC",
     tags: ["Community", "Retention", "Behavior"],
   },
@@ -78,7 +78,7 @@ const NODES: JourneyNode[] = [
     year: "2026",
     subtitle: "From inputs to direction to commitment",
     summary:
-      "Single handedly the most confusing periods of my life, but amidst the AI boom, when everyone focused on the applications, I was decided to think about what made it happen, the compute, the hardware. and my curiosity led me to EE at MIT M.",
+      "Amidst the AI boom, when everyone focused on the applications, I was stuck think about what made it possible, the compute, the hardware. and my curiosity led me to EEE at MIT M.",
     logo: "LIFE",
     tags: ["Books", "Hardware", "Semiconductors", "Robotics", "AI Infra"],
   },

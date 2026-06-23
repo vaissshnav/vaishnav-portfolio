@@ -61,7 +61,7 @@ function Home() {
         <footer id="bottom" className="mx-auto max-w-6xl px-6 py-12">
           <div className="mono-label flex items-center justify-between">
             <span>© Vaishnav</span>
-            <span>made with purpose ❤️</span>
+            <span>made with purpose</span>
           </div>
         </footer>
       </div>
@@ -100,13 +100,13 @@ function About() {
       </h1>
       <div className="mt-10 max-w-2xl space-y-6 text-lg leading-relaxed text-foreground/85 sm:text-xl">
         <p>
-          EE student at{" "}
+          EEE student at{" "}
           <Annotation
             label="MIT Manipal"
             meta="Education · 2026—2030"
-            body="Electircal Engineering."
-            memory="making core memories"
-            project="working on things"
+            body="Electrical and Electronics Engineering."
+            memory="just getting started"
+            project="0 to 1"
             connId="a-manipal"
           >
             Manipal
@@ -116,7 +116,7 @@ function About() {
             label="Semiconductors"
             meta="Curiosity"
             body="the layer underneath all of modern technology."
-            memory="it all started from jee semiconductors"
+            memory="it all started from semiconductors during jee"
             project="trying to learn more about semiconductors"
             connId="a-semi"
           >
@@ -138,7 +138,7 @@ function About() {
             label="AI"
             meta="Curiosity"
             body="the infra and data that makes modern AI possible"
-            memory="how ml training works, and how to make it better"
+            memory="being curious about how ml, neural networks and transformers work"
             project="learning the underlying math and building small scale models"
             connId="a-ai"
           >
