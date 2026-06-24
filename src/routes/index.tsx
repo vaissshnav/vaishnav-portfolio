@@ -36,9 +36,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <ConnectionProvider>
-      <Suspense fallback={null}>
-        <ParticleBackground />
-      </Suspense>
+      {/* Particle background disabled for performance */}
       {/* relative + z-10 keeps page content above the connection overlay (z-0),
           so connection lines render behind cards but body bg still shows through. */}
       <div className="relative z-10 min-h-screen text-foreground">
