@@ -106,9 +106,9 @@ export function ParticleBackground() {
       const docH = getDocHeight();
       const vpH = window.innerHeight;
 
-      // ~12 per viewport, min 50 — fewer, subtler particles
+      // ~8 per viewport, min 30 — very sparse, minimal performance impact
       const viewports = docH / vpH;
-      const count = Math.max(50, Math.round(viewports * 12));
+      const count = Math.max(30, Math.round(viewports * 8));
 
       const newParticles: Particle[] = [];
 
@@ -203,10 +203,10 @@ export function ParticleBackground() {
           const dy = p2.y - p1.y;
           const dist = Math.hypot(dx, dy);
 
-          if (dist < 80) {
-            const t = dist / 80;
+          if (dist < 50) {
+            const t = dist / 50;
             // Very subtle idle alpha
-            const alpha = (1 - t) * 0.015;
+            const alpha = (1 - t) * 0.012;
 
             // Boost near mouse
             let mouseBoost = 1;
