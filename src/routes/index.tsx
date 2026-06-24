@@ -3,13 +3,15 @@ import { ArrowUpRight } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Annotation } from "@/components/Annotation";
-import { JourneyRail } from "@/components/JourneyRail";
-import { InterestMap } from "@/components/InterestMap";
-import { ReadingList } from "@/components/ReadingList";
 import { SectionRail } from "@/components/SectionRail";
 import { ResumeDropdown } from "@/components/ResumeDropdown";
 import { ConnectionProvider } from "@/components/ConnectionContext";
-import { ParticleBackground } from "@/components/ParticleBackground";
+import { Suspense, lazy } from "react";
+
+const JourneyRail = lazy(() => import("@/components/JourneyRail").then(m => ({ default: m.JourneyRail })));
+const InterestMap = lazy(() => import("@/components/InterestMap").then(m => ({ default: m.InterestMap })));
+const ReadingList = lazy(() => import("@/components/ReadingList").then(m => ({ default: m.ReadingList })));
+const ParticleBackground = lazy(() => import("@/components/ParticleBackground").then(m => ({ default: m.ParticleBackground })));
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,7 +36,9 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <ConnectionProvider>
-      <ParticleBackground />
+      <Suspense fallback={null}>
+        <ParticleBackground />
+      </Suspense>
       {/* relative + z-10 keeps page content above the connection overlay (z-0),
           so connection lines render behind cards but body bg still shows through. */}
       <div className="relative z-10 min-h-screen text-foreground">
@@ -51,12 +55,18 @@ function Home() {
 
         <About />
         <Divider />
-        <Journey />
+        <Suspense fallback={<div className="mx-auto max-w-5xl px-6 py-20 text-center text-muted-foreground">Loading journey…</div>}>
+          <Journey />
+        </Suspense>
         {/* Rail continues through every following section to Contact */}
         <SectionRail height={120} withDot />
-        <Interests />
+        <Suspense fallback={<div className="mx-auto max-w-5xl px-6 py-20 text-center text-muted-foreground">Loading interests…</div>}>
+          <Interests />
+        </Suspense>
         <SectionRail height={240} withDot />
-        <Reading />
+        <Suspense fallback={<div className="mx-auto max-w-5xl px-6 py-20 text-center text-muted-foreground">Loading reading list…</div>}>
+          <Reading />
+        </Suspense>
         <SectionRail height={140} />
         <Contact />
 
