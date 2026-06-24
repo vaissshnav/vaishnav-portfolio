@@ -106,9 +106,9 @@ export function ParticleBackground() {
       const docH = getDocHeight();
       const vpH = window.innerHeight;
 
-      // ~20 per viewport, min 90
+      // ~12 per viewport, min 50 — fewer, subtler particles
       const viewports = docH / vpH;
-      const count = Math.max(90, Math.round(viewports * 20));
+      const count = Math.max(50, Math.round(viewports * 12));
 
       const newParticles: Particle[] = [];
 
@@ -130,8 +130,8 @@ export function ParticleBackground() {
             originY: spawnY,
             vx: 0,
             vy: 0,
-            radius: 1.6 + Math.random() * 0.6,
-            alpha: 0.4 + Math.random() * 0.2,
+            radius: 1.0 + Math.random() * 0.4,
+            alpha: 0.15 + Math.random() * 0.1,
           });
         }
       }

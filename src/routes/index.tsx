@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Annotation } from "@/components/Annotation";
 import { JourneyRail } from "@/components/JourneyRail";
@@ -38,6 +39,7 @@ function Home() {
           so connection lines render behind cards but body bg still shows through. */}
       <div className="relative z-10 min-h-screen text-foreground">
         <FloatingNav />
+        <ThemeToggle />
 
         {/* Top mast */}
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 pt-8">
@@ -71,7 +73,7 @@ function Home() {
 
 function Divider() {
   return (
-    <div className="mx-auto my-24 max-w-6xl px-6">
+    <div className="mx-auto my-32 max-w-5xl px-6">
       <div className="h-px w-full" style={{ backgroundColor: "var(--border)" }} />
     </div>
   );
@@ -79,7 +81,7 @@ function Divider() {
 
 function SectionHeader({ index, title }: { index: string; title: string }) {
   return (
-    <div className="mx-auto mb-12 flex max-w-5xl items-baseline gap-6 px-6">
+    <div className="mx-auto mb-16 flex max-w-5xl items-baseline gap-6 px-6">
       <span className="mono-label">{index}</span>
       <h2 className="font-serif text-3xl text-foreground sm:text-4xl">{title}</h2>
     </div>
@@ -92,13 +94,13 @@ function About() {
   return (
     <section
       id="about"
-      className="mx-auto flex min-h-[88vh] max-w-5xl flex-col justify-center px-6 pt-16"
+      className="mx-auto flex min-h-[88vh] max-w-5xl flex-col justify-center px-6 pt-24"
     >
-      <div className="mono-label mb-6">01 / About</div>
+      <div className="mono-label mb-8">01 / About</div>
       <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
         Vaishnav<span style={{ color: "var(--accent)" }}>.</span>
       </h1>
-      <div className="mt-10 max-w-2xl space-y-6 text-lg leading-relaxed text-foreground/85 sm:text-xl">
+      <div className="mt-12 max-w-2xl space-y-8 text-lg leading-[1.75] text-foreground/85 sm:text-xl">
         <p>
           EEE student at{" "}
           <Annotation
@@ -166,7 +168,7 @@ function About() {
         </p>
       </div>
 
-      <div className="mono-label mt-20 flex items-center gap-3 text-muted-foreground">
+      <div className="mono-label mt-24 flex items-center gap-3 text-muted-foreground">
         <span className="block h-px w-8" style={{ backgroundColor: "var(--rail)" }} />
         Begin the path
       </div>
@@ -198,22 +200,19 @@ function Interests() {
   return (
     <section id="interests" className="scroll-mt-24">
       <SectionHeader index="03 / Current Interests" title="A thinking map, not a list" />
-      <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_1.2fr] md:items-center">
-        <div className="space-y-5 text-foreground/85">
-          <p className="text-base leading-relaxed">
+      <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_0.9fr] md:items-start">
+        <div className="space-y-6 text-foreground/85">
+          <p className="text-base leading-[1.75]">
             These aren't isolated interests; they influence each other. Hover any node to see what
             it connects to. Everything eventually loops back to <em className="font-serif">NOW</em>.
           </p>
-          <ul className="mono-label space-y-1 pt-2">
+          <ul className="mono-label space-y-2 pt-2">
             <li>· Hardware ↔ Semiconductors</li>
             <li>· Semiconductors ↔ AI Infrastructure</li>
             <li>· AI Infrastructure ↔ Startups</li>
             <li>· Startups ↔ Design</li>
             <li>· Everything → NOW</li>
           </ul>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            These nodal maps are heavily inspired from Obsidian, where It all just <em className="font-serif text-foreground">connects.</em>
-          </p>
         </div>
         <InterestMap />
       </div>
@@ -227,7 +226,7 @@ function Reading() {
   return (
     <section id="reading" className="scroll-mt-24">
       <SectionHeader index="05 / Reading" title="Influences, not recommendations" />
-      <p className="mx-auto mb-10 max-w-2xl px-6 text-sm leading-relaxed text-muted-foreground">
+      <p className="mx-auto mb-12 max-w-2xl px-6 text-sm leading-[1.75] text-muted-foreground">
         Each book card carries four editable fields:{" "}
         <em className="font-serif text-foreground">why it mattered</em>,{" "}
         <em className="font-serif text-foreground">key idea</em>,{" "}

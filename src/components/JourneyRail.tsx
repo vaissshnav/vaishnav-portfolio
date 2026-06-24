@@ -78,7 +78,7 @@ const NODES: JourneyNode[] = [
     year: "2026",
     subtitle: "From inputs to direction to commitment",
     summary:
-      "Amidst the AI boom, when everyone focused on the applications, I was stuck think about what made it possible, the compute, the hardware. and my curiosity led me to EEE at MIT M.",
+      "Amidst the AI boom, when everyone focused on the applications, I was stuck think about what made it possiblem, the compute, the hardware. and my curiosity led me to EEE at MIT M.",
     logo: "LIFE",
     tags: ["Books", "Hardware", "Semiconductors", "Robotics", "AI Infra"],
   },
@@ -266,10 +266,10 @@ export function JourneyRail() {
               />
 
               <div
-                className={`pl-12 md:pl-0 ${isLeft ? "md:col-start-1 md:pr-10 md:text-right" : "md:col-start-2 md:pl-10"
+                className={`pl-12 md:pl-0 ${isLeft ? "md:col-start-1 md:pr-10" : "md:col-start-2 md:pl-10"
                   }`}
               >
-                <JourneyCard node={node} isActive={isActive} align={isLeft ? "right" : "left"} />
+                <JourneyCard node={node} isActive={isActive} />
               </div>
             </li>
           );
@@ -303,19 +303,9 @@ const RailDot = forwardRef<HTMLSpanElement, { active: boolean; reached: boolean 
 );
 RailDot.displayName = "RailDot";
 
-function JourneyCard({
-  node,
-  isActive,
-  align,
-}: {
-  node: JourneyNode;
-  isActive: boolean;
-  align: "left" | "right";
-}) {
+function JourneyCard({ node, isActive }: { node: JourneyNode; isActive: boolean }) {
   return (
-    <article
-      className="group relative block rounded-lg border bg-card p-6 transition-all duration-300 hover:-translate-y-0.5"
-    >
+    <article className="group relative block rounded-lg border bg-card p-6 text-left transition-all duration-300 hover:-translate-y-0.5">
       <div
         style={{
           borderRadius: 8,
@@ -323,15 +313,10 @@ function JourneyCard({
           transition: "opacity 300ms ease",
         }}
       >
-        <header
-          className={`flex items-start gap-4 ${align === "right" ? "md:flex-row-reverse md:text-right" : ""
-            }`}
-        >
+        <header className="flex items-start gap-4">
           <LogoSlot label={node.logo ?? node.title.slice(0, 3)} active={isActive} />
           <div className="min-w-0 flex-1">
-            <div
-              className={`flex items-baseline gap-3 ${align === "right" ? "md:justify-end" : ""}`}
-            >
+            <div className="flex items-baseline gap-3">
               <h3 className="font-serif text-2xl leading-none text-foreground">{node.title}</h3>
               <span className="mono-label">{node.year}</span>
             </div>
@@ -342,7 +327,7 @@ function JourneyCard({
         <p className="mt-4 text-[15px] leading-relaxed text-foreground/85">{node.summary}</p>
 
         {node.tags && (
-          <ul className={`mt-4 flex flex-wrap gap-2 ${align === "right" ? "md:justify-end" : ""}`}>
+          <ul className="mt-4 flex flex-wrap gap-2">
             {node.tags.map((t) => (
               <li
                 key={t}
