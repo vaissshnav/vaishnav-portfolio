@@ -200,7 +200,7 @@ function Interests() {
   return (
     <section id="interests" className="scroll-mt-24">
       <SectionHeader index="03 / Current Interests" title="A thinking map, not a list" />
-      <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_0.9fr] md:items-start">
+      <div className="mx-auto grid max-w-5xl gap-12 px-6 md:grid-cols-[1fr_0.99fr] md:items-start">
         <div className="space-y-6 text-foreground/85">
           <p className="text-base leading-[1.75]">
             These aren't isolated interests; they influence each other. Hover any node to see what
