@@ -117,32 +117,100 @@ export function InterestMap() {
                 className="absolute inset-0 h-full w-full"
                 preserveAspectRatio="none"
             >
+                {/* Persistent base lines — always visible, subtle */}
+                {PRIMARY_EDGES.map(([a, b], i) => (
+                    <line
+                        key={`primary-${i}`}
+                        x1={POS[a].x}
+                        y1={POS[a].y}
+                        x2={POS[b].x}
+                        y2={POS[b].y}
+                        stroke="var(--rail)"
+                        strokeWidth={0.2}
+                        vectorEffect="non-scaling-stroke"
+                        style={{ opacity: 0.5, transition: "all 250ms ease" }}
+                    />
+                ))}
+
+                {/* Hover-highlighted primary lines */}
                 {PRIMARY_EDGES.map(([a, b], i) => {
                     const active =
                         hover && (hover === a || hover === b);
 
                     return (
                         <line
-                            key={`primary-${i}`}
+                            key={`primary-active-${i}`}
                             x1={POS[a].x}
                             y1={POS[a].y}
                             x2={POS[b].x}
                             y2={POS[b].y}
-                            stroke={active ? "var(--accent)" : "var(--rail)"}
-                            strokeWidth={active ? 0.45 : 0.15}
+                            stroke="var(--accent)"
+                            strokeWidth={active ? 0.5 : 0}
                             vectorEffect="non-scaling-stroke"
                             style={{
-                                opacity: hover
-                                    ? active
-                                        ? 1
-                                        : 0.08
-                                    : 0.35,
+                                opacity: active ? 1 : 0,
                                 transition: "all 250ms ease",
                             }}
                         />
                     );
                 })}
 
+                {/* Persistent relation lines (loops to NOW) */}
+                {RELATION_EDGES.map(([a, b], i) => {
+                    const x1 = POS[a].x;
+                    const y1 = POS[a].y;
+                    const x2 = POS[b].x;
+                    const y2 = POS[b].y;
+
+                    const mx = (x1 + x2) / 2;
+                    const my = (y1 + y2) / 2;
+
+                    const dx = x2 - x1;
+                    const dy = y2 - y1;
+
+                    const len = Math.max(
+                        Math.sqrt(dx * dx + dy * dy),
+                        0.001
+                    );
+
+                    const curve = 10;
+
+                    const cx = mx - (dy / len) * curve;
+                    const cy = my + (dx / len) * curve;
+
+                    const path = `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`;
+
+                    const active =
+                        hover && (hover === a || hover === b);
+
+                    return (
+                        <path
+                            key={`relation-${i}`}
+                            d={path}
+                            fill="none"
+                            stroke="var(--rail)"
+                            strokeWidth={0.18}
+                            strokeDasharray="3 4"
+                            vectorEffect="non-scaling-stroke"
+                            style={{
+                                opacity: active ? 0.7 : 0.35,
+                                transition: "all 250ms ease",
+                            }}
+                        >
+                            {active && (
+                                <animate
+                                    attributeName="stroke-dashoffset"
+                                    from="0"
+                                    to="-60"
+                                    dur="2s"
+                                    repeatCount="indefinite"
+                                />
+                            )}
+                        </path>
+                    );
+                })}
+
+                {/* Hover-highlighted relation lines */}
                 {RELATION_EDGES.map(([a, b], i) => {
                     const active =
                         hover && (hover === a || hover === b);
@@ -172,19 +240,15 @@ export function InterestMap() {
 
                     return (
                         <path
-                            key={`relation-${i}`}
+                            key={`relation-active-${i}`}
                             d={path}
                             fill="none"
-                            stroke={active ? "var(--accent)" : "var(--rail)"}
-                            strokeWidth={active ? 0.4 : 0.15}
-                            strokeDasharray="4 5"
+                            stroke="var(--accent)"
+                            strokeWidth={active ? 0.45 : 0}
+                            strokeDasharray="3 4"
                             vectorEffect="non-scaling-stroke"
                             style={{
-                                opacity: hover
-                                    ? active
-                                        ? 0.8
-                                        : 0.04
-                                    : 0.18,
+                                opacity: active ? 1 : 0,
                                 transition: "all 250ms ease",
                             }}
                         >

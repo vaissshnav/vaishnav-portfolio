@@ -168,25 +168,32 @@ export function JourneyRail() {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
-      const rect = container.getBoundingClientRect();
-      const viewportMid = window.innerHeight * 0.5;
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          const container = containerRef.current;
+          if (!container) return;
+          const rect = container.getBoundingClientRect();
+          const viewportMid = window.innerHeight * 0.5;
 
-      const railTop = rect.top;
-      const railHeight = rect.height;
-      const traveled = Math.min(Math.max(viewportMid - railTop, 0), railHeight);
-      const p = railHeight > 0 ? traveled / railHeight : 0;
-      setProgress(p);
+          const railTop = rect.top;
+          const railHeight = rect.height;
+          const traveled = Math.min(Math.max(viewportMid - railTop, 0), railHeight);
+          const p = railHeight > 0 ? traveled / railHeight : 0;
+          setProgress(p);
 
-      let nextActive = 0;
-      nodeRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        if (r.top - 80 < viewportMid) nextActive = i;
-      });
-      setActiveIdx(nextActive);
+          let nextActive = 0;
+          nodeRefs.current.forEach((el, i) => {
+            if (!el) return;
+            const r = el.getBoundingClientRect();
+            if (r.top - 80 < viewportMid) nextActive = i;
+          });
+          setActiveIdx(nextActive);
+          ticking = false;
+        });
+      }
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

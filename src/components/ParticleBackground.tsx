@@ -106,9 +106,9 @@ export function ParticleBackground() {
       const docH = getDocHeight();
       const vpH = window.innerHeight;
 
-      // ~8 per viewport, min 30 — very sparse, minimal performance impact
+      // ~15 per viewport, min 60 — enough to interact with, still performant
       const viewports = docH / vpH;
-      const count = Math.max(30, Math.round(viewports * 8));
+      const count = Math.max(60, Math.round(viewports * 15));
 
       const newParticles: Particle[] = [];
 
